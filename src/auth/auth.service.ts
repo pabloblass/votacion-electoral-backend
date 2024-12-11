@@ -6,10 +6,7 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
-  async validateUser(
-    password: string,
-    hashedPassword: string,
-  ): Promise<boolean> {
+  async validateUser(password: string, hashedPassword: string): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword);
   }
 

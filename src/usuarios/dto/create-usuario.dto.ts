@@ -1,4 +1,13 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { Rol } from '@prisma/client';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+  ValidateIf,
+} from 'class-validator';
 
 export class CreateUsuarioDto {
   @IsNotEmpty()
@@ -11,8 +20,19 @@ export class CreateUsuarioDto {
   @MaxLength(30)
   username: string;
 
-  @IsNotEmpty()
+  @ValidateIf((o) => o.rol === Rol.ADMINISTRADOR)
+  @IsOptional()
   @IsString()
-  @MaxLength(250)
-  password: string;
+  @MinLength(8)
+  password?: string;
+
+  @ValidateIf((o) => o.rol === Rol.ADMINISTRADOR)
+  @IsOptional()
+  @IsString()
+  @MinLength(8)
+  password_confirmation?: string;
+
+  @IsNotEmpty()
+  @IsEnum(Rol)
+  rol: Rol;
 }
