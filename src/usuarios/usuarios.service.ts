@@ -10,6 +10,7 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { PaginationDto } from 'src/compartido';
 import { FilterUsuariosDto } from './dto/filter-usuarios.dto';
 import { Prisma, Rol } from '@prisma/client';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UsuariosService {
@@ -39,6 +40,22 @@ export class UsuariosService {
 
     // Si se proporciona un id, se verifica que el usuario encontrado no tenga ese id
     return !!user && user.id !== excludeUserId;
+  }
+
+  async findByUsername(username: string) {
+    return this.prisma.usuario.findFirst({
+      where: {
+        username,
+        activo: true,
+      },
+      select: {
+        id: true,
+        nombre_apellido: true,
+        username: true,
+        password: true,
+        rol: true,
+      },
+    });
   }
 
   async create(createUsuarioDto: CreateUsuarioDto) {
@@ -191,6 +208,49 @@ export class UsuariosService {
         activo: false,
       },
       select: this.selectQuery,
+    });
+  }
+
+  async updatePassword(
+    id: number,
+    updatePasswordDto: UpdatePasswordDto,
+  ): Promise<void> {
+    // Verificar si el usuario existe
+    const usuario = await this.prisma.usuario.findUnique({ where: { id } });
+
+    if (!usuario) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // Verificar si el password actual es correcto
+    const passwordValido = await bcrypt.compare(
+      updatePasswordDto.password_actual,
+      usuario.password,
+    );
+    if (!passwordValido) {
+      throw new BadRequestException('La contraseña actual es incorrecta');
+    }
+
+    // Verificar si el nuevo password coincide con confirmarPassword
+    if (
+      updatePasswordDto.nuevo_password !==
+      updatePasswordDto.confirmacion_password
+    ) {
+      throw new BadRequestException(
+        'La nueva contraseña y su confirmación no coinciden',
+      );
+    }
+
+    // Encriptar el nuevo password
+    const passwordHash = await bcrypt.hash(
+      updatePasswordDto.nuevo_password,
+      10,
+    );
+
+    // Actualizar el password en la base de datos
+    await this.prisma.usuario.update({
+      where: { id },
+      data: { password: passwordHash },
     });
   }
 }
