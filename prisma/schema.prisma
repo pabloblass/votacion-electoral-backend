@@ -24,6 +24,12 @@ enum Genero {
   FEMENINO    @map("F")
 }
 
+enum Estado {
+  PENDIENTE   @map("1")
+  REGISTRADO  @map("2")
+  VERIFICADO  @map("3")
+}
+
 model Usuario {
   id                    Int               @id @default(autoincrement())
   nombre_apellido       String            @db.VarChar(150)
@@ -98,6 +104,8 @@ model Mesa {
   usuario_modificacion  String            @db.VarChar(50)
   fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
   fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+  actas                 Acta[]
+  votos                 Voto[]
 
   @@map("mesas")
 }
@@ -112,6 +120,51 @@ model Candidato {
   usuario_modificacion  String            @db.VarChar(50)
   fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
   fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+  votos                 Voto[]
 
   @@map("candidatos")
+}
+
+model Acta {
+  id                    Int               @id @default(autoincrement())
+  mesa                  Mesa              @relation(fields: [id_mesa], references: [id])
+  id_mesa               Int
+  imagen_acta           String            @db.VarChar(250)
+  validos_m             Int               @default(0)
+  blancos_m             Int               @default(0)
+  nulos_m               Int               @default(0)
+  validos_h             Int               @default(0)
+  blancos_h             Int               @default(0)
+  nulos_h               Int               @default(0)
+  observado             Boolean           @default(false)
+  estado                Estado            @default(PENDIENTE)
+  activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
+  fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+
+  @@map("actas")
+}
+
+model Voto {
+  id                    Int               @id @default(autoincrement())
+  //municipio             Municipio         @relation(fields: [id_municipio], references: [id])
+  //id_municipio          Int
+  //recinto               Recinto           @relation(fields: [id_recinto], references: [id])
+  //id_recinto            Int
+  mesa                  Mesa              @relation(fields: [id_mesa], references: [id])
+  id_mesa               Int
+  candidato             Candidato         @relation(fields: [id_candidato], references: [id])
+  id_candidato          Int
+  votos                 Int               @default(0)
+  activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
+  fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+
+  @@map("votos")
 }
