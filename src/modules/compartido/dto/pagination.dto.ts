@@ -4,14 +4,14 @@ import { Type } from 'class-transformer';
 export class PaginationDto {
   @IsOptional()
   @Type(() => Number)
-  @IsInt()
-  @Min(1)
+  @IsInt({ message: 'El parámetro page debe ser un número entero' })
+  @Min(1, { message: 'El parámetro page debe tener un valor mayor a cero' })
   page?: number;
 
   @IsOptional()
   @Type(() => Number)
-  @IsInt()
-  @Min(1)
+  @IsInt({ message: 'El parámetro limit debe ser un número entero' })
+  @Min(1, { message: 'El parámetro limit debe tener un valor mayor a cero' })
   limit?: number;
 
   @IsOptional()
@@ -20,7 +20,7 @@ export class PaginationDto {
 
   @IsOptional()
   @IsIn(['ASC', 'DESC'], {
-    message: 'sortOrder debe ser ASC o DESC',
+    message: 'El parámetro sortOrder debe ser ASC o DESC',
   })
   sortOrder?: 'ASC' | 'DESC';
 }

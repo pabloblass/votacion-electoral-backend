@@ -10,28 +10,17 @@ import {
   Req,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { PaginationDto } from 'src/compartido';
+import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
+import { PaginationDto } from 'src/modules/compartido';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { FilterUsuariosDto } from './dto/filter-usuarios.dto';
-import { parseId } from 'src/compartido/validators/parse-id.validator';
 import { UsuariosService } from './usuarios.service';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
-
-  @Post('update_password')
-  updatePassword(
-    //@Param('id') id: string,
-    @Req() request: Request,
-    @Body() updatePasswordDto: UpdatePasswordDto,
-  ) {
-    //const parsedId = parseId(id);
-    const usuarioId = request.usuario.id;
-    return this.usuariosService.updatePassword(usuarioId, updatePasswordDto);
-  }
 
   @Post()
   create(@Body() createUserDto: CreateUsuarioDto) {
@@ -47,20 +36,29 @@ export class UsuariosController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    const parsedId = parseId(id);
-    return this.usuariosService.findOne(parsedId);
+  findOne(@Param('id', ParseIdPipe) id: number) {
+    return this.usuariosService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-    const parsedId = parseId(id);
-    return this.usuariosService.update(parsedId, updateUsuarioDto);
+  update(
+    @Param('id', ParseIdPipe) id: number,
+    @Body() updateUsuarioDto: UpdateUsuarioDto,
+  ) {
+    return this.usuariosService.update(id, updateUsuarioDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    const parsedId = parseId(id);
-    return this.usuariosService.remove(parsedId);
+  remove(@Param('id', ParseIdPipe) id: number) {
+    return this.usuariosService.remove(id);
+  }
+
+  @Post('update_password')
+  updatePassword(
+    @Req() request: Request,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ) {
+    const userId = request.usuario.id;
+    return this.usuariosService.updatePassword(userId, updatePasswordDto);
   }
 }
