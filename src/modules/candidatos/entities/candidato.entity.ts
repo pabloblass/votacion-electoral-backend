@@ -1,10 +1,8 @@
-import { Rol } from '@prisma/client';
+import { Genero } from '@prisma/client';
 
-export class Usuario {
-  username: string;
-  password: string;
-  nombre_apellido: string;
-  rol: Rol;
+export class Candidato {
+  nombre: string;
+  genero: Genero;
   usuario_creacion: string;
   fecha_creacion: Date;
   usuario_modificacion: string;

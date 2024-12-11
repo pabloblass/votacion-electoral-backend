@@ -14,8 +14,10 @@ export class DepartamentosService {
     id: true,
     descripcion: true,
     activo: true,
+    usuario_creacion: true,
     fecha_creacion: true,
-    fecha_actualizacion: true,
+    usuario_modificacion: true,
+    fecha_modificacion: true,
   };
 
   private async findDepartamentoByIdOrThrow(id: number) {
@@ -104,6 +106,7 @@ export class DepartamentosService {
       where: { id },
       data: {
         activo: false,
+        fecha_eliminacion: new Date(),
       },
       select: this.selectQuery,
     });

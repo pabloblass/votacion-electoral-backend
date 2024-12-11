@@ -7,7 +7,9 @@ import {
   Param,
   Delete,
   Query,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { RecintosService } from './recintos.service';
 import { PaginationDto } from '../compartido';
 import { FilterRecintosDto } from './dto/filter-recintos.dto';
@@ -20,8 +22,12 @@ export class RecintosController {
   constructor(private readonly recintosService: RecintosService) {}
 
   @Post()
-  create(@Body() createRecintoDto: CreateRecintoDto) {
-    return this.recintosService.create(createRecintoDto);
+  create(@Req() request: Request, @Body() createRecintoDto: CreateRecintoDto) {
+    return this.recintosService.create({
+      usuario_creacion: request.user.username,
+      usuario_modificacion: request.user.username,
+      ...createRecintoDto,
+    });
   }
 
   @Get('list')
@@ -44,10 +50,14 @@ export class RecintosController {
 
   @Patch(':id')
   update(
+    @Req() request: Request,
     @Param('id', ParseIdPipe) id: number,
     @Body() updateRecintoDto: UpdateRecintoDto,
   ) {
-    return this.recintosService.update(id, updateRecintoDto);
+    return this.recintosService.update(id, {
+      usuario_modificacion: request.user.username,
+      ...updateRecintoDto,
+    });
   }
 
   @Delete(':id')

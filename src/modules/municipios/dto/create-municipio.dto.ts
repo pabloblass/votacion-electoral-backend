@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsPositive, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class CreateMunicipioDto {
   @IsNotEmpty({ message: 'La descripcion es obligatorio' })
@@ -8,7 +8,10 @@ export class CreateMunicipioDto {
   })
   descripcion: string;
 
-  @IsNotEmpty({ message: 'El ID de Departamento es obligatorio' })
+  /*@IsNotEmpty({ message: 'El ID de Departamento es obligatorio' })
   @IsPositive({ message: 'El ID de Departamento debe ser positivo' })
-  id_departamento: number;
+  id_departamento: number;*/
+
+  usuario_creacion: string;
+  usuario_modificacion: string;
 }

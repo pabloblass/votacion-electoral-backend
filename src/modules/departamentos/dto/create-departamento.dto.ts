@@ -7,4 +7,7 @@ export class CreateDepartamentoDto {
     message: 'La descripcion no debe exceder los 250 caracteres',
   })
   descripcion: string;
+
+  usuario_creacion: string;
+  usuario_modificacion: string;
 }

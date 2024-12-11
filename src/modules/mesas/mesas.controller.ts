@@ -7,7 +7,9 @@ import {
   Param,
   Delete,
   Query,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { MesasService } from './mesas.service';
 import { CreateMesaDto } from './dto/create-mesa.dto';
 import { UpdateMesaDto } from './dto/update-mesa.dto';
@@ -20,8 +22,12 @@ export class MesasController {
   constructor(private readonly mesasService: MesasService) {}
 
   @Post()
-  create(@Body() createMesaDto: CreateMesaDto) {
-    return this.mesasService.create(createMesaDto);
+  create(@Req() request: Request, @Body() createMesaDto: CreateMesaDto) {
+    return this.mesasService.create({
+      usuario_creacion: request.user.username,
+      usuario_modificacion: request.user.username,
+      ...createMesaDto,
+    });
   }
 
   @Get('list')
@@ -39,19 +45,23 @@ export class MesasController {
 
   @Get(':id')
   findOne(@Param('id', ParseIdPipe) id: number) {
-    return this.mesasService.findOne(+id);
+    return this.mesasService.findOne(id);
   }
 
   @Patch(':id')
   update(
+    @Req() request: Request,
     @Param('id', ParseIdPipe) id: number,
     @Body() updateMesaDto: UpdateMesaDto,
   ) {
-    return this.mesasService.update(+id, updateMesaDto);
+    return this.mesasService.update(id, {
+      usuario_modificacion: request.user.username,
+      ...updateMesaDto,
+    });
   }
 
   @Delete(':id')
   remove(@Param('id', ParseIdPipe) id: number) {
-    return this.mesasService.remove(+id);
+    return this.mesasService.remove(id);
   }
 }

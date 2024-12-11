@@ -11,4 +11,7 @@ export class CreateRecintoDto {
   @IsNotEmpty({ message: 'El ID de Municipio es obligatorio' })
   @IsPositive({ message: 'El ID de Municipio debe ser positivo' })
   id_municipio: number;
+
+  usuario_creacion: string;
+  usuario_modificacion: string;
 }

@@ -35,4 +35,7 @@ export class CreateUsuarioDto {
   @IsNotEmpty()
   @IsEnum(Rol)
   rol: Rol;
+
+  usuario_creacion: string;
+  usuario_modificacion: string;
 }

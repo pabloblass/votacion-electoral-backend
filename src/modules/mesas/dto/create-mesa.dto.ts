@@ -9,11 +9,14 @@ export class CreateMesaDto {
   @IsPositive({ message: 'El código debe ser positivo' })
   codigo: string;*/
 
-  @IsNotEmpty({ message: 'El Número es obligatorio' })
-  @IsPositive({ message: 'El Número debe ser positivo' })
-  numero: number;
+  @IsNotEmpty({ message: 'El N° de Mesa es obligatorio' })
+  @IsPositive({ message: 'El N° de Mesa debe ser positivo' })
+  nro_mesa: number;
 
   @IsNotEmpty({ message: 'La Cantidad de Habilitados es obligatorio' })
   @IsPositive({ message: 'La Cantidad de Habilitados debe ser positivo' })
   habilitados: number;
+
+  usuario_creacion: string;
+  usuario_modificacion: string;
 }

@@ -12,7 +12,7 @@ export class MesasService {
 
   private readonly selectQuery: Prisma.MesaSelect = {
     id: true,
-    numero: true,
+    nro_mesa: true,
     habilitados: true,
     recinto: {
       select: {
@@ -22,19 +22,21 @@ export class MesasService {
           select: {
             id: true,
             descripcion: true,
-            departamento: {
+            /*departamento: {
               select: {
                 id: true,
                 descripcion: true,
               },
-            },
+            },*/
           },
         },
       },
     },
     activo: true,
+    usuario_creacion: true,
     fecha_creacion: true,
-    fecha_actualizacion: true,
+    usuario_modificacion: true,
+    fecha_modificacion: true,
   };
 
   private async findMesaByIdOrThrow(id: number) {
@@ -59,9 +61,9 @@ export class MesasService {
 
   findByRecinto(idRecinto: number) {
     return this.prisma.mesa.findMany({
-      select: { id: true, numero: true, habilitados: true },
+      select: { id: true, nro_mesa: true, habilitados: true },
       where: { activo: true, id_recinto: idRecinto },
-      orderBy: { numero: 'asc' },
+      orderBy: { nro_mesa: 'asc' },
     });
   }
 
@@ -70,18 +72,17 @@ export class MesasService {
     filterMesasDto: FilterMesasDto,
   ) {
     const { page = 1, limit = 10, sortBy, sortOrder } = paginationDto;
-    const { id_departamento, id_municipio, id_recinto, numero } =
-      filterMesasDto;
+    const { id_municipio, id_recinto, nro_mesa } = filterMesasDto;
 
     const where: Prisma.MesaWhereInput = {};
 
-    if (id_departamento) {
+    /*if (id_departamento) {
       where.recinto = {
         municipio: {
           id_departamento: id_departamento,
         },
       };
-    }
+    }*/
 
     if (id_municipio) {
       where.recinto = {
@@ -93,8 +94,8 @@ export class MesasService {
       where.id_recinto = id_recinto;
     }
 
-    if (numero) {
-      where.numero = numero;
+    if (nro_mesa) {
+      where.nro_mesa = nro_mesa;
     }
 
     const orderBy = sortBy
@@ -106,7 +107,7 @@ export class MesasService {
         where,
         select: {
           id: true,
-          numero: true,
+          nro_mesa: true,
           habilitados: true,
           recinto: {
             select: {
@@ -116,12 +117,12 @@ export class MesasService {
                 select: {
                   id: true,
                   descripcion: true,
-                  departamento: {
+                  /*departamento: {
                     select: {
                       id: true,
                       descripcion: true,
                     },
-                  },
+                  },*/
                 },
               },
             },
@@ -167,6 +168,7 @@ export class MesasService {
       where: { id },
       data: {
         activo: false,
+        fecha_eliminacion: new Date(),
       },
       select: this.selectQuery,
     });
