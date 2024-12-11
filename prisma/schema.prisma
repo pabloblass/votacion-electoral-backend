@@ -31,3 +31,26 @@ model Usuario {
 
   @@map("usuarios")
 }
+
+model Departamento {
+  id                    Int               @id @default(autoincrement())
+  descripcion           String            @db.VarChar(250)
+  activo                Boolean           @default(true)
+  fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
+  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+  municipios            Municipio[]
+
+  @@map("departamentos")
+}
+
+model Municipio {
+  id                    Int               @id @default(autoincrement())
+  departamento          Departamento      @relation(fields: [id_departamento], references: [id])
+  id_departamento       Int
+  descripcion           String            @db.VarChar(250)
+  activo                Boolean           @default(true)
+  fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
+  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+
+  @@map("municipios")
+}

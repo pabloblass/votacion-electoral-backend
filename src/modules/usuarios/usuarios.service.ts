@@ -4,12 +4,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
+import { Prisma, Rol } from '@prisma/client';
+import { PaginationDto } from 'src/modules/compartido';
+import { FilterUsuariosDto } from './dto/filter-usuarios.dto';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { PaginationDto } from 'src/compartido';
-import { FilterUsuariosDto } from './dto/filter-usuarios.dto';
-import { Prisma, Rol } from '@prisma/client';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
@@ -25,6 +25,19 @@ export class UsuariosService {
     fecha_creacion: true,
     fecha_actualizacion: true,
   };
+
+  private async findUsuarioByIdOrThrow(id: number) {
+    const usuario = await this.prisma.usuario.findUnique({
+      where: { id },
+      select: this.selectQuery,
+    });
+
+    if (!usuario) {
+      throw new NotFoundException(`El usuario con ID ${id} no existe`);
+    }
+
+    return usuario;
+  }
 
   private async isExistUsername(
     username: string,
@@ -155,20 +168,14 @@ export class UsuariosService {
   }
 
   findOne(id: number) {
-    return this.prisma.usuario.findUnique({
-      where: { id },
-      select: this.selectQuery,
-    });
+    return this.findUsuarioByIdOrThrow(id);
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
     const { password, password_confirmation, rol } = updateUsuarioDto;
 
     // Verificar que el usuario exista
-    const user = await this.prisma.usuario.findUnique({ where: { id } });
-    if (!user) {
-      throw new NotFoundException('Usuario no encontrado');
-    }
+    await this.findUsuarioByIdOrThrow(id);
 
     // Validar si el username está siendo cambiado y si ya existe
     if (updateUsuarioDto.username) {
@@ -201,7 +208,9 @@ export class UsuariosService {
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    await this.findUsuarioByIdOrThrow(id);
+
     return this.prisma.usuario.update({
       where: { id },
       data: {
@@ -215,12 +224,8 @@ export class UsuariosService {
     id: number,
     updatePasswordDto: UpdatePasswordDto,
   ): Promise<void> {
-    // Verificar si el usuario existe
-    const usuario = await this.prisma.usuario.findUnique({ where: { id } });
-
-    if (!usuario) {
-      throw new NotFoundException('Usuario no encontrado');
-    }
+    // Obtener el usuario
+    const usuario = await this.findUsuarioByIdOrThrow(id);
 
     // Verificar si el password actual es correcto
     const passwordValido = await bcrypt.compare(

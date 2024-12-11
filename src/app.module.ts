@@ -1,10 +1,27 @@
 import { Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './jwt/jwt.guard';
 import { PrismaModule } from './prisma/prisma.module';
-import { UsuariosModule } from './usuarios/usuarios.module';
-import { CompartidoModule } from './compartido/compartido.module';
+import { CompartidoModule } from './modules/compartido/compartido.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsuariosModule } from './modules/usuarios/usuarios.module';
+import { MunicipiosModule } from './modules/municipios/municipios.module';
+import { DepartamentosModule } from './modules/departamentos/departamentos.module';
 
 @Module({
-  imports: [AuthModule, PrismaModule, UsuariosModule, CompartidoModule],
+  imports: [
+    PrismaModule,
+    CompartidoModule,
+    AuthModule,
+    UsuariosModule,
+    MunicipiosModule,
+    DepartamentosModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}
