@@ -23,8 +23,12 @@ export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUsuarioDto) {
-    return this.usuariosService.create(createUserDto);
+  create(@Req() request: Request, @Body() createUserDto: CreateUsuarioDto) {
+    return this.usuariosService.create({
+      usuario_creacion: request.user.username,
+      usuario_modificacion: request.user.username,
+      ...createUserDto,
+    });
   }
 
   @Get()
@@ -42,10 +46,14 @@ export class UsuariosController {
 
   @Put(':id')
   update(
+    @Req() request: Request,
     @Param('id', ParseIdPipe) id: number,
     @Body() updateUsuarioDto: UpdateUsuarioDto,
   ) {
-    return this.usuariosService.update(id, updateUsuarioDto);
+    return this.usuariosService.update(id, {
+      usuario_modificacion: request.user.username,
+      ...updateUsuarioDto,
+    });
   }
 
   @Delete(':id')
@@ -58,7 +66,7 @@ export class UsuariosController {
     @Req() request: Request,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
-    const userId = request.usuario.id;
+    const userId = request.user.id;
     return this.usuariosService.updatePassword(userId, updatePasswordDto);
   }
 }

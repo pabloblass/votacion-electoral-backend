@@ -7,7 +7,9 @@ import {
   Param,
   Delete,
   Query,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { DepartamentosService } from './departamentos.service';
 import { PaginationDto } from '../compartido';
 import { FilterDptosDto } from './dto/filter-departamentos.dto';
@@ -20,8 +22,15 @@ export class DepartamentosController {
   constructor(private readonly departamentosService: DepartamentosService) {}
 
   @Post()
-  create(@Body() createDepartamentoDto: CreateDepartamentoDto) {
-    return this.departamentosService.create(createDepartamentoDto);
+  create(
+    @Req() request: Request,
+    @Body() createDepartamentoDto: CreateDepartamentoDto,
+  ) {
+    return this.departamentosService.create({
+      usuario_creacion: request.user.username,
+      usuario_modificacion: request.user.username,
+      ...createDepartamentoDto,
+    });
   }
 
   @Get('list')
@@ -47,10 +56,14 @@ export class DepartamentosController {
 
   @Put(':id')
   update(
+    @Req() request: Request,
     @Param('id', ParseIdPipe) id: number,
     @Body() updateDepartamentoDto: UpdateDepartamentoDto,
   ) {
-    return this.departamentosService.update(+id, updateDepartamentoDto);
+    return this.departamentosService.update(id, {
+      usuario_modificacion: request.user.username,
+      ...updateDepartamentoDto,
+    });
   }
 
   @Delete(':id')

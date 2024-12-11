@@ -14,8 +14,10 @@ export class MunicipiosService {
     id: true,
     descripcion: true,
     activo: true,
+    usuario_creacion: true,
     fecha_creacion: true,
-    fecha_actualizacion: true,
+    usuario_modificacion: true,
+    fecha_modificacion: true,
   };
 
   private async findMunicipioByIdOrThrow(id: number) {
@@ -38,10 +40,18 @@ export class MunicipiosService {
     });
   }
 
-  findByDpto(idDepartamento: number) {
+  /*findByDpto(idDepartamento: number) {
     return this.prisma.municipio.findMany({
       select: { id: true, descripcion: true },
       where: { activo: true, id_departamento: idDepartamento },
+      orderBy: { descripcion: 'asc' },
+    });
+  }*/
+
+  findAll() {
+    return this.prisma.municipio.findMany({
+      select: { id: true, descripcion: true },
+      where: { activo: true },
       orderBy: { descripcion: 'asc' },
     });
   }
@@ -104,6 +114,7 @@ export class MunicipiosService {
       where: { id },
       data: {
         activo: false,
+        fecha_eliminacion: new Date(),
       },
       select: this.selectQuery,
     });

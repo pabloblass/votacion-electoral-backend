@@ -19,6 +19,11 @@ enum Rol {
   TRANSCRIPTOR
 }
 
+enum Genero {
+  MASCULINO   @map("M")
+  FEMENINO    @map("F")
+}
+
 model Usuario {
   id                    Int               @id @default(autoincrement())
   nombre_apellido       String            @db.VarChar(150)
@@ -26,8 +31,11 @@ model Usuario {
   password              String?           @db.VarChar(250)
   rol                   Rol
   activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
-  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
 
   @@map("usuarios")
 }
@@ -36,21 +44,27 @@ model Departamento {
   id                    Int               @id @default(autoincrement())
   descripcion           String            @db.VarChar(250)
   activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
-  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
-  municipios            Municipio[]
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+  //municipios            Municipio[]
 
   @@map("departamentos")
 }
 
 model Municipio {
   id                    Int               @id @default(autoincrement())
-  departamento          Departamento      @relation(fields: [id_departamento], references: [id])
-  id_departamento       Int
+  //departamento          Departamento      @relation(fields: [id_departamento], references: [id])
+  //id_departamento       Int
   descripcion           String            @db.VarChar(250)
   activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
-  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
   recintos              Recinto[]
 
   @@map("municipios")
@@ -62,8 +76,11 @@ model Recinto {
   id_municipio          Int
   descripcion           String            @db.VarChar(250)
   activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
-  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
   mesas                 Mesa[]
 
   @@map("recintos")
@@ -73,12 +90,28 @@ model Mesa {
   id                    Int               @id @default(autoincrement())
   recinto               Recinto           @relation(fields: [id_recinto], references: [id])
   id_recinto            Int
-  //codigo                BigInt
-  numero                Int
+  nro_mesa              Int
   habilitados           Int
   activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
-  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
 
   @@map("mesas")
+}
+
+model Candidato {
+  id                    Int               @id @default(autoincrement())
+  nombre                String            @db.VarChar(150)
+  genero                Genero
+  activo                Boolean           @default(true)
+  usuario_creacion      String            @db.VarChar(50)
+  fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
+  usuario_modificacion  String            @db.VarChar(50)
+  fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
+  fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+
+  @@map("candidatos")
 }

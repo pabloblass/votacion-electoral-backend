@@ -14,6 +14,6 @@ export class FilterMesasDto {
   id_recinto?: number;
 
   @IsOptional()
-  @IsPositive({ message: 'El Número debe ser positivo' })
-  numero?: number;
+  @IsPositive({ message: 'El Número de Mesa debe ser positivo' })
+  nro_mesa?: number;
 }

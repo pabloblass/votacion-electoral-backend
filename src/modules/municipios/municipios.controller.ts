@@ -7,7 +7,9 @@ import {
   Delete,
   Query,
   Put,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { MunicipiosService } from './municipios.service';
 import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
 import { PaginationDto } from '../compartido';
@@ -20,14 +22,26 @@ export class MunicipiosController {
   constructor(private readonly municipiosService: MunicipiosService) {}
 
   @Post()
-  create(@Body() createMunicipioDto: CreateMunicipioDto) {
-    return this.municipiosService.create(createMunicipioDto);
+  create(
+    @Req() request: Request,
+    @Body() createMunicipioDto: CreateMunicipioDto,
+  ) {
+    return this.municipiosService.create({
+      usuario_creacion: request.user.username,
+      usuario_modificacion: request.user.username,
+      ...createMunicipioDto,
+    });
   }
 
   @Get('list')
+  findAll() {
+    return this.municipiosService.findAll();
+  }
+
+  /*@Get('list')
   findByDpto(@Query('id_departamento', ParseIdPipe) idDepartamento: number) {
     return this.municipiosService.findByDpto(idDepartamento);
-  }
+  }*/
 
   @Get()
   findPaginated(
@@ -47,10 +61,14 @@ export class MunicipiosController {
 
   @Put(':id')
   update(
+    @Req() request: Request,
     @Param('id', ParseIdPipe) id: number,
     @Body() updateMunicipioDto: UpdateMunicipioDto,
   ) {
-    return this.municipiosService.update(id, updateMunicipioDto);
+    return this.municipiosService.update(id, {
+      usuario_modificacion: request.user.username,
+      ...updateMunicipioDto,
+    });
   }
 
   @Delete(':id')

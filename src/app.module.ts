@@ -9,6 +9,7 @@ import { MunicipiosModule } from './modules/municipios/municipios.module';
 import { DepartamentosModule } from './modules/departamentos/departamentos.module';
 import { RecintosModule } from './modules/recintos/recintos.module';
 import { MesasModule } from './modules/mesas/mesas.module';
+import { CandidatosModule } from './modules/candidatos/candidatos.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { MesasModule } from './modules/mesas/mesas.module';
     DepartamentosModule,
     RecintosModule,
     MesasModule,
+    CandidatosModule,
   ],
   providers: [
     {
