@@ -73,13 +73,13 @@ export class MunicipiosService {
     ]);
 
     return {
-      data,
       meta: {
         total,
         page,
         limit: limit > 0 ? limit : total,
         totalPage: limit > 0 ? Math.ceil(total / limit) : 1,
       },
+      data,
     };
   }
 

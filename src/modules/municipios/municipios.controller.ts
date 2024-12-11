@@ -11,7 +11,7 @@ import {
 import { MunicipiosService } from './municipios.service';
 import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
 import { PaginationDto } from '../compartido';
-import { FilterUsuariosDto } from '../usuarios/dto/filter-usuarios.dto';
+import { FilterMunicipiosDto } from './dto/filter-municipios.dto';
 import { CreateMunicipioDto } from './dto/create-municipio.dto';
 import { UpdateMunicipioDto } from './dto/update-municipio.dto';
 
@@ -32,9 +32,12 @@ export class MunicipiosController {
   @Get()
   findPaginated(
     @Query() paginationDto: PaginationDto,
-    @Query() filterUsersDto: FilterUsuariosDto,
+    @Query() filterMunicipiosDto: FilterMunicipiosDto,
   ) {
-    return this.municipiosService.findPaginated(paginationDto, filterUsersDto);
+    return this.municipiosService.findPaginated(
+      paginationDto,
+      filterMunicipiosDto,
+    );
   }
 
   @Get(':id')

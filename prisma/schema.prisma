@@ -51,6 +51,34 @@ model Municipio {
   activo                Boolean           @default(true)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
   fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+  recintos              Recinto[]
 
   @@map("municipios")
+}
+
+model Recinto {
+  id                    Int               @id @default(autoincrement())
+  municipio             Municipio         @relation(fields: [id_municipio], references: [id])
+  id_municipio          Int
+  descripcion           String            @db.VarChar(250)
+  activo                Boolean           @default(true)
+  fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
+  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+  mesas                 Mesa[]
+
+  @@map("recintos")
+}
+
+model Mesa {
+  id                    Int               @id @default(autoincrement())
+  recinto               Recinto           @relation(fields: [id_recinto], references: [id])
+  id_recinto            Int
+  //codigo                BigInt
+  numero                Int
+  habilitados           Int
+  activo                Boolean           @default(true)
+  fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
+  fecha_actualizacion   DateTime          @updatedAt @db.Timestamptz(3)
+
+  @@map("mesas")
 }
