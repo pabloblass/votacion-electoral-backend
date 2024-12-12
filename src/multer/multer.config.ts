@@ -12,7 +12,7 @@ export const multerConfig: MulterOptions = {
     },
     filename: (_req, file, cb) => {
       const extension = path.extname(file.originalname);
-      const uniqueFileName = `${uuidv4()}.${extension}`;
+      const uniqueFileName = `${uuidv4()}${extension}`;
       return cb(null, uniqueFileName);
     },
   }),

@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import * as fs from 'fs/promises';
-import path from 'path';
+import * as path from 'path';
 import { ActasService } from './actas.service';
 import { CreateActaDto } from './dto/create-acta.dto';
 import { UpdateActaDto } from './dto/update-acta.dto';
@@ -23,7 +23,7 @@ import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
 import { FilterActasDto } from './dto/filter-actas.dto';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { multerConfig } from 'src/multer/multer.config';
-import { FormDataToJsonInterceptor } from 'src/multer/form-data-to-json.interceptor';
+import { FormDataToJsonInterceptor } from 'src/interceptors/form-data-to-json.interceptor';
 //import { plainToInstance } from 'class-transformer';
 //import { validate } from 'class-validator';
 
@@ -92,13 +92,7 @@ export class ActasController {
       if (actaOld.imagen) {
         const oldImagePath = path.join(imageBasePath, actaOld.imagen);
 
-        try {
-          await fs.unlink(oldImagePath);
-        } catch (error) {
-          throw new BadRequestException(
-            `No se pudo eliminar la imagen antigua: ${error.message}`,
-          );
-        }
+        await fs.unlink(oldImagePath);
       }
     }
 
