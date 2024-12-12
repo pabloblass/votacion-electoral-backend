@@ -26,7 +26,8 @@ export class CreateActaDto {
   })*/
   imagen: string;
 
-  @IsNotEmpty({ message: 'El campo votos válidos mujeres es obligatorio' })
+  //@IsNotEmpty({ message: 'El campo votos válidos mujeres es obligatorio' })
+  @IsOptional()
   @Type(() => Number)
   @IsInt({
     message: 'El campo votos válidos mujeres debe ser un número entero',
@@ -34,9 +35,10 @@ export class CreateActaDto {
   @Min(0, {
     message: 'El campo votos válidos mujeres debe ser mayor o igual a 0',
   })
-  validos_m: number;
+  validos_m?: number;
 
-  @IsNotEmpty({ message: 'El campo votos blancos mujeres es obligatorio' })
+  //@IsNotEmpty({ message: 'El campo votos blancos mujeres es obligatorio' })
+  @IsOptional()
   @Type(() => Number)
   @IsInt({
     message: 'El campo votos blancos mujeres debe ser un número entero',
@@ -44,9 +46,10 @@ export class CreateActaDto {
   @Min(0, {
     message: 'El campo votos blancos mujeres debe ser mayor o igual a 0',
   })
-  blancos_m: number;
+  blancos_m?: number;
 
-  @IsNotEmpty({ message: 'El campo votos nulos mujeres es obligatorio' })
+  //@IsNotEmpty({ message: 'El campo votos nulos mujeres es obligatorio' })
+  @IsOptional()
   @Type(() => Number)
   @IsInt({
     message: 'El campo votos nulos mujeres debe ser un número entero',
@@ -54,9 +57,10 @@ export class CreateActaDto {
   @Min(0, {
     message: 'El campo votos nulos mujeres debe ser mayor o igual a 0',
   })
-  nulos_m: number;
+  nulos_m?: number;
 
-  @IsNotEmpty({ message: 'El campo votos validos hombres es obligatorio' })
+  //@IsNotEmpty({ message: 'El campo votos validos hombres es obligatorio' })
+  @IsOptional()
   @Type(() => Number)
   @IsInt({
     message: 'El campo votos validos hombres debe ser un número entero',
@@ -64,9 +68,10 @@ export class CreateActaDto {
   @Min(0, {
     message: 'El campo votos validos hombres debe ser mayor o igual a 0',
   })
-  validos_h: number;
+  validos_h?: number;
 
-  @IsNotEmpty({ message: 'El campo votos blancos hombres es obligatorio' })
+  //@IsNotEmpty({ message: 'El campo votos blancos hombres es obligatorio' })
+  @IsOptional()
   @Type(() => Number)
   @IsInt({
     message: 'El campo votos blancos hombres debe ser un número entero',
@@ -74,9 +79,10 @@ export class CreateActaDto {
   @Min(0, {
     message: 'El campo votos blancos hombres debe ser mayor o igual a 0',
   })
-  blancos_h: number;
+  blancos_h?: number;
 
-  @IsNotEmpty({ message: 'El campo votos nulos hombres es obligatorio' })
+  //@IsNotEmpty({ message: 'El campo votos nulos hombres es obligatorio' })
+  @IsOptional()
   @Type(() => Number)
   @IsInt({
     message: 'El campo votos nulos hombres debe ser un número entero',
@@ -84,17 +90,19 @@ export class CreateActaDto {
   @Min(0, {
     message: 'El campo votos nulos hombres debe ser mayor o igual a 0',
   })
-  nulos_h: number;
+  nulos_h?: number;
 
+  @IsOptional()
   @IsArray({ message: 'El campo votos debe ser un array' })
   @ValidateNested({ each: true })
   @Type(() => VotoDTO)
-  votos: VotoDTO[];
+  votos?: VotoDTO[];
 
-  @IsNotEmpty({ message: 'El campo observado es obligatorio' })
+  //@IsNotEmpty({ message: 'El campo observado es obligatorio' })
+  @IsOptional()
   @Transform(({ value }) => value === 'true')
   @IsBoolean({ message: 'El campo observado debe ser un boleano' })
-  observado: boolean;
+  observado?: boolean;
 
   @IsOptional()
   @IsEnum(Estado)
