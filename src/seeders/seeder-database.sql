@@ -7,6 +7,7 @@ VALUES
 (4, 'SASAMOTO', 'sasamoto', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
 (5, 'VLADIMIR ASTETE', 'vladimir', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
 (6, 'VERONICA', 'veronica', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null);
+(7, 'USUARIO RECINTO PRUEBA', 'usuario_recinto', NULL, 'USUARIO_RECINTO', SESSION_USER, now(), SESSION_USER, now(), null);
 
 INSERT INTO public.municipios 
 (id, descripcion, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
@@ -2317,3 +2318,10 @@ VALUES
 (4, 'FAVIO CHACOLLA HUANCA', 'M', SESSION_USER, now(), SESSION_USER, now(), null),
 (5, 'CARLOS EDUARDO ORTEGA SIVILA', 'M', SESSION_USER, now(), SESSION_USER, now(), null),
 (6, 'HUMBERTO ORTEGA MARTINEZ', 'M', SESSION_USER, now(), SESSION_USER, now(), null);
+
+--RESTABLECER SEQUENCIAS
+SELECT setval('usuarios_id_seq', max(id)) FROM usuarios;
+SELECT setval('municipios_id_seq', max(id)) FROM usuarios;
+SELECT setval('recintos_id_seq', max(id)) FROM usuarios;
+SELECT setval('mesas_id_seq', max(id)) FROM usuarios;
+SELECT setval('candidatos_id_seq', max(id)) FROM usuarios;
