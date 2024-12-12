@@ -23,18 +23,28 @@ import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
 import { FilterActasDto } from './dto/filter-actas.dto';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { multerConfig } from 'src/multer/multer.config';
+import { FormDataToJsonInterceptor } from 'src/multer/form-data-to-json.interceptor';
+//import { plainToInstance } from 'class-transformer';
+//import { validate } from 'class-validator';
 
 @Controller('actas')
 export class ActasController {
   constructor(private readonly actasService: ActasService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('imagen', multerConfig))
+  @UseInterceptors(
+    FormDataToJsonInterceptor, // Aplica el transformador de datos
+    FileInterceptor('imagen', multerConfig), // Maneja la carga del archivo
+  )
   async create(
     @UploadedFile() image: Express.Multer.File,
     @Body() createActaDto: CreateActaDto,
     @Req() request: Request,
   ) {
+    if (!image) {
+      throw new BadRequestException('Se debe cargar una imagen.');
+    }
+
     return this.actasService.create({
       ...createActaDto,
       imagen: image.filename,
@@ -57,7 +67,10 @@ export class ActasController {
   }
 
   @Put(':id')
-  @UseInterceptors(FileInterceptor('imagen', multerConfig))
+  @UseInterceptors(
+    FormDataToJsonInterceptor,
+    FileInterceptor('imagen', multerConfig),
+  )
   async update(
     @Param('id', ParseIdPipe) id: number,
     @Body() updateActaDto: UpdateActaDto,
