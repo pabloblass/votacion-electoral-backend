@@ -8,27 +8,27 @@ Backend del sistema de registro de actas de votación desarrollado en [Nest](htt
 
 #### Paso 2.- Crear una base de datos vacía en postgres
 
-#### Paso 3.- En la raiz del proyecto crear un archivo .env,
+#### Paso 3.- Crear una carpeta fuera del proyecto para guardar las imagenes
 
-#### copiar el contenido del archivo .env.example
+#### Paso 4.- Crear una copia del archivo .env.example y renombrarlo a .env
 
-#### y editar las variables de entorno
+#### Paso 5.- Editar las variables de entorno en el archivo .env
 
-#### Paso 4.- Instalar dependencias
+#### Paso 6.- Instalar dependencias
 
 ```bash
 $ npm install
 ```
 
-#### Paso 5.- Crear las tablas de la base de datos
+#### Paso 7.- Crear las tablas de la base de datos
 
 ```bash
 $ npx prisma db push
 ```
 
-#### Paso 6.- Sembrar los datos con el script que se encuentra en src/seeders/seeder-database.sql
+#### Paso 8.- Sembrar los datos con el script que se encuentra en src/seeders/seeder-database.sql
 
-#### Paso 7.- Compilar y ejecutar el proyecto
+#### Paso 9.- Compilar y ejecutar el proyecto
 
 ```bash
 # development
