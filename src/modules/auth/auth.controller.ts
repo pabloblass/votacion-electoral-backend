@@ -10,6 +10,9 @@ export class AuthController {
   @Post('login')
   @Public()
   async login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+    const data = await this.authService.login(loginDto);
+    delete data.usuario.password;
+
+    return data;
   }
 }

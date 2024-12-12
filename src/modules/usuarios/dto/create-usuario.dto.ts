@@ -1,8 +1,10 @@
 import { Rol } from '@prisma/client';
 import {
+  IsArray,
   IsEnum,
   IsNotEmpty,
   IsOptional,
+  IsPositive,
   IsString,
   MaxLength,
   MinLength,
@@ -35,6 +37,15 @@ export class CreateUsuarioDto {
   @IsNotEmpty()
   @IsEnum(Rol)
   rol: Rol;
+
+  @ValidateIf((o) => o.rol === Rol.USUARIO_RECINTO)
+  @IsOptional()
+  @IsArray()
+  @IsPositive({
+    each: true,
+    message: 'Los valores del array recintos deben ser positivos',
+  })
+  recintos?: number[];
 
   usuario_creacion: string;
   usuario_modificacion: string;

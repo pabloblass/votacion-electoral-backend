@@ -30,6 +30,12 @@ export class ActasService {
         },
       },
     },
+    votos: {
+      select: {
+        id_candidato: true,
+        votos: true,
+      },
+    },
     imagen: true,
     validos_m: true,
     blancos_m: true,
@@ -54,14 +60,17 @@ export class ActasService {
       const createdActa = await tx.acta.create({
         data: {
           ...data,
-          votos: {
-            create: votos.map((voto) => ({
-              candidato: { connect: { id: voto.id_candidato } },
-              votos: voto.votos,
-              usuario_creacion,
-              usuario_modificacion,
-            })),
-          },
+          ...(votos &&
+            votos.length > 0 && {
+              votos: {
+                create: votos.map((voto) => ({
+                  candidato: { connect: { id: voto.id_candidato } },
+                  votos: voto.votos,
+                  usuario_creacion,
+                  usuario_modificacion,
+                })),
+              },
+            }),
           usuario_creacion,
           usuario_modificacion,
         },
@@ -132,6 +141,12 @@ export class ActasService {
           observado: true,
           estado: true,
           activo: true,
+          votos: {
+            select: {
+              id_candidato: true,
+              votos: true,
+            },
+          },
         },
         skip: limit > 0 ? (page - 1) * limit : undefined,
         take: limit > 0 ? limit : undefined,
@@ -179,25 +194,29 @@ export class ActasService {
         where: { id },
         data: {
           ...data,
-          ...(imagen && { imagen }), // si la imagen no es nula se agrega a la data de actualizacion
-          votos: {
-            upsert: votos.map((voto) => ({
-              where: { id_candidato: voto.id_candidato, id },
-              create: {
-                candidato: { connect: { id: voto.id_candidato } },
-                votos: voto.votos,
-                usuario_creacion,
-                usuario_modificacion,
+          ...(imagen && { imagen }), // Agregar imagen si está definida
+          ...(votos &&
+            votos.length > 0 && {
+              votos: {
+                upsert: votos.map((voto) => ({
+                  where: { id_candidato: voto.id_candidato, id },
+                  create: {
+                    candidato: { connect: { id: voto.id_candidato } },
+                    votos: voto.votos,
+                    usuario_creacion,
+                    usuario_modificacion,
+                  },
+                  update: {
+                    votos: voto.votos,
+                    usuario_modificacion,
+                  },
+                })),
               },
-              update: {
-                votos: voto.votos,
-                usuario_modificacion,
-              },
-            })),
-          },
+            }),
         },
         select: this.selectQuery,
       });
+
       return updatedActa;
     });
 

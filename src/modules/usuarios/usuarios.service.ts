@@ -21,6 +21,13 @@ export class UsuariosService {
     nombre_apellido: true,
     username: true,
     rol: true,
+    usuarios_recintos: {
+      select: {
+        recinto: {
+          select: { id: true, descripcion: true },
+        },
+      },
+    },
     activo: true,
     usuario_creacion: true,
     fecha_creacion: true,
@@ -74,13 +81,16 @@ export class UsuariosService {
   }
 
   async create(createUsuarioDto: CreateUsuarioDto) {
-    const { password, password_confirmation, rol } = createUsuarioDto;
+    const { password, password_confirmation, rol, recintos, ...restData } =
+      createUsuarioDto;
 
     // Validar si el username ya está registrado
     const usernameTaken = await this.isExistUsername(createUsuarioDto.username);
     if (usernameTaken) {
       throw new BadRequestException('El username ya está registrado.');
     }
+
+    const dataToCreated: Prisma.UsuarioCreateInput = { ...restData, rol };
 
     // Si el rol es ADMINISTRADOR, se debe verificar la contraseña
     if (rol === 'ADMINISTRADOR' && password) {
@@ -93,23 +103,21 @@ export class UsuariosService {
       // Encriptar la contraseña
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Crear el objeto usuario con la contraseña encriptada
-      const userData = { ...createUsuarioDto, password: hashedPassword };
-
-      // Excluir password_confirmation antes de guardar en BD
-      delete userData.password_confirmation;
-
-      return this.prisma.usuario.create({
-        data: userData,
-        select: this.selectQuery,
-      });
+      // Agregar la contraseña encriptada
+      dataToCreated.password = hashedPassword;
     }
 
-    // Si no es ADMINISTRADOR, no es necesario encriptar la contraseña
-    // Excluir password_confirmation antes de guardar en BD
-    delete createUsuarioDto.password_confirmation;
+    if (recintos && recintos.length > 0) {
+      const recintosArray = recintos.map((value) => ({ id_recinto: value }));
+      dataToCreated.usuarios_recintos = {
+        createMany: {
+          data: recintosArray,
+        },
+      };
+    }
+
     return this.prisma.usuario.create({
-      data: createUsuarioDto,
+      data: dataToCreated,
       select: this.selectQuery,
     });
   }
@@ -174,7 +182,8 @@ export class UsuariosService {
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    const { password, password_confirmation, rol } = updateUsuarioDto;
+    const { password, password_confirmation, rol, recintos, ...restData } =
+      updateUsuarioDto;
 
     // Verificar que el usuario exista
     await this.findUsuarioByIdOrThrow(id);
@@ -190,6 +199,8 @@ export class UsuariosService {
       }
     }
 
+    const dataToUpdate: Prisma.UsuarioUpdateInput = { ...restData, rol };
+
     // Si el rol es ADMINISTRADOR y la contraseña es proporcionada
     if (rol === 'ADMINISTRADOR' && password) {
       if (password !== password_confirmation) {
@@ -198,14 +209,22 @@ export class UsuariosService {
 
       // Encriptar la contraseña
       const hashedPassword = await bcrypt.hash(password, 10);
-      updateUsuarioDto.password = hashedPassword;
+      dataToUpdate.password = hashedPassword;
     }
 
-    // Excluir password_confirmation antes de guardar en BD
-    delete updateUsuarioDto.password_confirmation;
+    if (recintos) {
+      const recintosArray = recintos.map((value) => ({ id_recinto: value }));
+      dataToUpdate.usuarios_recintos = {
+        deleteMany: {},
+        createMany: {
+          data: recintosArray,
+        },
+      };
+    }
+
     return this.prisma.usuario.update({
       where: { id },
-      data: updateUsuarioDto,
+      data: dataToUpdate,
       select: this.selectQuery,
     });
   }
