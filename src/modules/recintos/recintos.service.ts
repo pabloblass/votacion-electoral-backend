@@ -25,6 +25,7 @@ export class RecintosService {
         },*/
       },
     },
+    distrito: true,
     activo: true,
     usuario_creacion: true,
     fecha_creacion: true,
@@ -65,7 +66,7 @@ export class RecintosService {
     filterRecintosDto: FilterRecintosDto,
   ) {
     const { page = 1, limit = 10, sortBy, sortOrder } = paginationDto;
-    const { id_municipio, descripcion } = filterRecintosDto;
+    const { id_municipio, distrito, descripcion } = filterRecintosDto;
 
     const where: Prisma.RecintoWhereInput = {};
 
@@ -77,6 +78,10 @@ export class RecintosService {
 
     if (id_municipio) {
       where.id_municipio = id_municipio;
+    }
+
+    if (distrito) {
+      where.distrito = { contains: distrito, mode: 'insensitive' };
     }
 
     if (descripcion) {
@@ -105,6 +110,7 @@ export class RecintosService {
               },*/
             },
           },
+          distrito: true,
           activo: true,
         },
         skip: limit > 0 ? (page - 1) * limit : undefined,

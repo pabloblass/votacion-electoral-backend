@@ -1,7 +1,9 @@
+import { Type } from 'class-transformer';
 import { IsNotEmpty, IsPositive } from 'class-validator';
 
 export class CreateMesaDto {
   @IsNotEmpty({ message: 'El ID de Recinto es obligatorio' })
+  @Type(() => Number)
   @IsPositive({ message: 'El ID de Recinto debe ser positivo' })
   id_recinto: number;
 
@@ -10,10 +12,12 @@ export class CreateMesaDto {
   codigo: string;*/
 
   @IsNotEmpty({ message: 'El N° de Mesa es obligatorio' })
+  @Type(() => Number)
   @IsPositive({ message: 'El N° de Mesa debe ser positivo' })
   nro_mesa: number;
 
   @IsNotEmpty({ message: 'La Cantidad de Habilitados es obligatorio' })
+  @Type(() => Number)
   @IsPositive({ message: 'La Cantidad de Habilitados debe ser positivo' })
   habilitados: number;
 
