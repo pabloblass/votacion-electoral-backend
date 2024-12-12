@@ -10,6 +10,8 @@ import { DepartamentosModule } from './modules/departamentos/departamentos.modul
 import { RecintosModule } from './modules/recintos/recintos.module';
 import { MesasModule } from './modules/mesas/mesas.module';
 import { CandidatosModule } from './modules/candidatos/candidatos.module';
+import { ActasModule } from './modules/actas/actas.module';
+//import { ParseFormDataMiddleware } from './multer/parse-form-data.middleware';
 
 @Module({
   imports: [
@@ -22,12 +24,17 @@ import { CandidatosModule } from './modules/candidatos/candidatos.module';
     RecintosModule,
     MesasModule,
     CandidatosModule,
+    ActasModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    /*{
+      provide: APP_INTERCEPTOR,
+      useClass: ParseFormDataMiddleware,
+    },*/
   ],
 })
 export class AppModule {}

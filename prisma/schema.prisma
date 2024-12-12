@@ -81,6 +81,7 @@ model Recinto {
   municipio             Municipio         @relation(fields: [id_municipio], references: [id])
   id_municipio          Int
   descripcion           String            @db.VarChar(250)
+  distrito              String            @db.VarChar(250)
   activo                Boolean           @default(true)
   usuario_creacion      String            @db.VarChar(50)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)
@@ -105,7 +106,6 @@ model Mesa {
   fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
   fecha_eliminacion     DateTime?         @db.Timestamptz(3)
   actas                 Acta[]
-  votos                 Voto[]
 
   @@map("mesas")
 }
@@ -129,7 +129,7 @@ model Acta {
   id                    Int               @id @default(autoincrement())
   mesa                  Mesa              @relation(fields: [id_mesa], references: [id])
   id_mesa               Int
-  imagen_acta           String            @db.VarChar(250)
+  imagen                String            @db.VarChar(250)
   validos_m             Int               @default(0)
   blancos_m             Int               @default(0)
   nulos_m               Int               @default(0)
@@ -144,6 +144,7 @@ model Acta {
   usuario_modificacion  String            @db.VarChar(50)
   fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
   fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+  votos                 Voto[]
 
   @@map("actas")
 }
@@ -154,8 +155,8 @@ model Voto {
   //id_municipio          Int
   //recinto               Recinto           @relation(fields: [id_recinto], references: [id])
   //id_recinto            Int
-  mesa                  Mesa              @relation(fields: [id_mesa], references: [id])
-  id_mesa               Int
+  acta                  Acta              @relation(fields: [id_acta], references: [id])
+  id_acta               Int
   candidato             Candidato         @relation(fields: [id_candidato], references: [id])
   id_candidato          Int
   votos                 Int               @default(0)
