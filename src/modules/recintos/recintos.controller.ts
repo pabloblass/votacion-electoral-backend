@@ -35,6 +35,11 @@ export class RecintosController {
     return this.recintosService.findByMunicipio(idMunicipio);
   }
 
+  @Get('municipio/:id')
+  findRecintoByIdMunicipio(@Param('id', ParseIdPipe) id: number) {
+    return this.recintosService.findRecintoByIdMunicipio(id);
+  }
+
   @Get()
   findPaginated(
     @Query() paginationDto: PaginationDto,

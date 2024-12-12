@@ -145,6 +145,14 @@ export class RecintosService {
     });
   }
 
+  findRecintoByIdMunicipio(idMunicipio: number) {
+    return this.prisma.recinto.findMany({
+      where: {
+        id_municipio: idMunicipio,
+      },
+    });
+  }
+
   async remove(id: number) {
     await this.findRecintoByIdOrThrow(id);
 

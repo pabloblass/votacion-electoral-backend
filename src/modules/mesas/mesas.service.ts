@@ -147,6 +147,14 @@ export class MesasService {
     };
   }
 
+  findMesaByIdRecinto(idRecinto: number) {
+    return this.prisma.mesa.findMany({
+      where: {
+        id_recinto: idRecinto,
+      },
+    });
+  }
+
   findOne(id: number) {
     return this.findMesaByIdOrThrow(id);
   }
