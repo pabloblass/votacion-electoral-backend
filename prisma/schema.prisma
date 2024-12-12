@@ -42,6 +42,7 @@ model Usuario {
   usuario_modificacion  String            @db.VarChar(50)
   fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
   fecha_eliminacion     DateTime?         @db.Timestamptz(3)
+  usuarios_recintos     UsuarioRecinto[]
 
   @@map("usuarios")
 }
@@ -89,6 +90,7 @@ model Recinto {
   fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
   fecha_eliminacion     DateTime?         @db.Timestamptz(3)
   mesas                 Mesa[]
+  usuarios_recintos     UsuarioRecinto[]
 
   @@map("recintos")
 }
@@ -123,6 +125,16 @@ model Candidato {
   votos                 Voto[]
 
   @@map("candidatos")
+}
+
+model UsuarioRecinto {
+  usuario               Usuario           @relation(fields: [id_usuario], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  id_usuario            Int
+  recinto               Recinto           @relation(fields: [id_recinto], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  id_recinto            Int
+
+  @@id([id_usuario, id_recinto])
+  @@map("usuarios_recintos")
 }
 
 model Acta {
