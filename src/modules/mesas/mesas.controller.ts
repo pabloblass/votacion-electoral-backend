@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   Query,
@@ -48,7 +48,12 @@ export class MesasController {
     return this.mesasService.findOne(id);
   }
 
-  @Patch(':id')
+  @Get('recinto/:id')
+  findMesaByIdRecinto(@Param('id', ParseIdPipe) id: number) {
+    return this.mesasService.findMesaByIdRecinto(id);
+  }
+
+  @Put(':id')
   update(
     @Req() request: Request,
     @Param('id', ParseIdPipe) id: number,

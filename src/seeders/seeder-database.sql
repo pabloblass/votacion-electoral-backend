@@ -2321,7 +2321,7 @@ VALUES
 
 --RESTABLECER SEQUENCIAS
 SELECT setval('usuarios_id_seq', max(id)) FROM usuarios;
-SELECT setval('municipios_id_seq', max(id)) FROM usuarios;
-SELECT setval('recintos_id_seq', max(id)) FROM usuarios;
-SELECT setval('mesas_id_seq', max(id)) FROM usuarios;
-SELECT setval('candidatos_id_seq', max(id)) FROM usuarios;
+SELECT setval('municipios_id_seq', max(id)) FROM municipios;
+SELECT setval('recintos_id_seq', max(id)) FROM recintos;
+SELECT setval('mesas_id_seq', max(id)) FROM mesas;
+SELECT setval('candidatos_id_seq', max(id)) FROM candidatos;

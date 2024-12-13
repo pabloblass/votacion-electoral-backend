@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import * as fs from 'fs/promises';
+import { readdirSync } from 'fs';
 import * as path from 'path';
 import { ActasService } from './actas.service';
 import { CreateActaDto } from './dto/create-acta.dto';
@@ -44,14 +45,15 @@ export class ActasController {
     if (!exists) {
       throw new BadRequestException('La Mesa ya tiene un Acta registrado');
     }
+    // ver para transcriptores
+    // if (!image) {
+    //   throw new BadRequestException('Se debe cargar una imagen.');
+    // }
 
-    if (!image) {
-      throw new BadRequestException('Se debe cargar una imagen.');
-    }
-
+    const defaultImagePath = 'src/uploads/defecto/defecto.jpg';
     return this.actasService.create({
       ...createActaDto,
-      imagen: image.filename,
+      imagen: image?.filename || defaultImagePath,
       usuario_creacion: request.user.username,
       usuario_modificacion: request.user.username,
     });
@@ -83,6 +85,11 @@ export class ActasController {
     }
 
     return actaFound;
+  }
+
+  @Get('registradas')
+  findRegistradas() {
+    return this.actasService.findRegistradas();
   }
 
   @Put(':id')
