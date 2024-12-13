@@ -22,6 +22,14 @@ export class CreateActaDto {
   })*/
   id_mesa: number;
 
+<<<<<<< HEAD
+=======
+  /*@IsNotEmpty({ message: 'La imagen es obligatorio' })
+  @MaxLength(250, {
+    message: 'La ruta de la imagen no debe exceder los 250 caracteres',
+  })*/
+  @IsOptional()
+>>>>>>> 3582dbf25048789837cfd01bc763a56ad194fdb2
   imagen: string;
 
   @IsOptional()

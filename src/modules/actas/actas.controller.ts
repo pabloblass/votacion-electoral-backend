@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import * as fs from 'fs/promises';
+import { readdirSync } from 'fs';
 import * as path from 'path';
 import { ActasService } from './actas.service';
 import { CreateActaDto } from './dto/create-acta.dto';
@@ -39,6 +40,7 @@ export class ActasController {
     @Body() createActaDto: CreateActaDto,
     @Req() request: Request,
   ) {
+<<<<<<< HEAD
     const exists = await this.actasService.existsIdMesa(createActaDto.id_mesa);
 
     if (!exists) {
@@ -49,9 +51,13 @@ export class ActasController {
       throw new BadRequestException('Se debe cargar una imagen.');
     }
 
+=======
+    const defaultImagePath = 'src/uploads/defecto/defecto.jpg';
+    
+>>>>>>> 3582dbf25048789837cfd01bc763a56ad194fdb2
     return this.actasService.create({
       ...createActaDto,
-      imagen: image.filename,
+      imagen: image?.filename || defaultImagePath,
       usuario_creacion: request.user.username,
       usuario_modificacion: request.user.username,
     });
@@ -68,6 +74,11 @@ export class ActasController {
   @Get(':id')
   findOne(@Param('id', ParseIdPipe) id: number) {
     return this.actasService.findOne(id);
+  }
+
+  @Get('registradas')
+  findRegistradas() {
+    return this.actasService.findRegistradas();
   }
 
   @Put(':id')
