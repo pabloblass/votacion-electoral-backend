@@ -24,6 +24,7 @@ export class CreateActaDto {
   @MaxLength(250, {
     message: 'La ruta de la imagen no debe exceder los 250 caracteres',
   })*/
+  @IsOptional()
   imagen: string;
 
   //@IsNotEmpty({ message: 'El campo votos válidos mujeres es obligatorio' })

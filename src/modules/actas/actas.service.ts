@@ -6,6 +6,7 @@ import { UpdateActaDto } from './dto/update-acta.dto';
 import { PaginationDto } from '../compartido';
 import { FilterActasDto } from './dto/filter-actas.dto';
 
+
 @Injectable()
 export class ActasService {
   constructor(private readonly prisma: PrismaService) {}
@@ -81,6 +82,37 @@ export class ActasService {
 
     return acta;
   }
+
+  async findRegistradas() {
+    return await this.prisma.acta.findMany({
+      where: {
+        estado: 'REGISTRADO',
+      },
+      select: {
+        id: true,
+        mesa: {
+          select: {
+            nro_mesa: true,
+            recinto: {
+              select: {
+                descripcion: true,
+                municipio: {
+                  select: {
+                    descripcion: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        observado: true,
+        estado: true,
+      },
+    });
+  }
+  
+  
+  
 
   async findPaginated(
     paginationDto: PaginationDto,
