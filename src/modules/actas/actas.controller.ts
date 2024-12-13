@@ -40,7 +40,7 @@ export class ActasController {
     @Body() createActaDto: CreateActaDto,
     @Req() request: Request,
   ) {
-<<<<<<< HEAD
+
     const exists = await this.actasService.existsIdMesa(createActaDto.id_mesa);
 
     if (!exists) {
@@ -51,10 +51,7 @@ export class ActasController {
       throw new BadRequestException('Se debe cargar una imagen.');
     }
 
-=======
     const defaultImagePath = 'src/uploads/defecto/defecto.jpg';
-    
->>>>>>> 3582dbf25048789837cfd01bc763a56ad194fdb2
     return this.actasService.create({
       ...createActaDto,
       imagen: image?.filename || defaultImagePath,
