@@ -46,7 +46,7 @@ export class ActasController {
     if (!exists) {
       throw new BadRequestException('La Mesa ya tiene un Acta registrado');
     }
-
+    // ver para transcriptores
     // if (!image) {
     //   throw new BadRequestException('Se debe cargar una imagen.');
     // }
