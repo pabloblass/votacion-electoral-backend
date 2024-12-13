@@ -3,7 +3,7 @@ import {
   Get,
   Post,
   Body,
-  Patch,
+  Put,
   Param,
   Delete,
   Query,
@@ -48,7 +48,7 @@ export class RecintosController {
     return this.recintosService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Req() request: Request,
     @Param('id', ParseIdPipe) id: number,
