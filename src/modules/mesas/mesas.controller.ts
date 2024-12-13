@@ -48,7 +48,6 @@ export class MesasController {
     return this.mesasService.findOne(id);
   }
 
-  @Put(':id')
   @Get('recinto/:id')
   findMesaByIdRecinto(@Param('id', ParseIdPipe) id: number) {
     return this.mesasService.findMesaByIdRecinto(id);
