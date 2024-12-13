@@ -47,9 +47,9 @@ export class ActasController {
       throw new BadRequestException('La Mesa ya tiene un Acta registrado');
     }
 
-    if (!image) {
-      throw new BadRequestException('Se debe cargar una imagen.');
-    }
+    // if (!image) {
+    //   throw new BadRequestException('Se debe cargar una imagen.');
+    // }
 
     const defaultImagePath = 'src/uploads/defecto/defecto.jpg';
     return this.actasService.create({
