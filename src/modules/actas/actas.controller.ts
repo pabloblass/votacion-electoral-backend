@@ -66,8 +66,23 @@ export class ActasController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIdPipe) id: number) {
-    return this.actasService.findOne(id);
+  async findOne(@Param('id', ParseIdPipe) id: number) {
+    const actaFound = await this.actasService.findOne(id);
+
+    if (actaFound.imagen) {
+      const folderPath = process.env.ROOT_PATH_IMAGES || './uploads';
+      const imagePath = path.join(folderPath, actaFound.imagen);
+
+      try {
+        // Lee el archivo en base64
+        const imageBuffer = await fs.readFile(imagePath);
+        actaFound.imagen = imageBuffer.toString('base64');
+      } catch {
+        actaFound.imagen = null;
+      }
+    }
+
+    return actaFound;
   }
 
   @Put(':id')
