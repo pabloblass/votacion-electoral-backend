@@ -234,7 +234,7 @@ export class ActasService {
     });
   }
 
-  async isUniqueIdMesa(idMesa: number, excludeId?: number): Promise<boolean> {
+  async existsIdMesa(idMesa: number, excludeId?: number): Promise<boolean> {
     const whereClause: Prisma.ActaWhereInput = { id_mesa: idMesa };
     if (excludeId) {
       whereClause.id = { not: excludeId };

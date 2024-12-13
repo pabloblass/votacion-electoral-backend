@@ -33,3 +33,10 @@ import { ActasModule } from './modules/actas/actas.module';
   ],
 })
 export class AppModule {}
+/*export class AppModule implements OnModuleInit {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  onModuleInit() {
+    GlobalServices.setPrismaService(this.prismaService);
+  }
+}*/
