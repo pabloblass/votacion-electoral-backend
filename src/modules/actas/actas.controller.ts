@@ -40,7 +40,6 @@ export class ActasController {
     @Body() createActaDto: CreateActaDto,
     @Req() request: Request,
   ) {
-
     const exists = await this.actasService.existsIdMesa(createActaDto.id_mesa);
 
     if (!exists) {

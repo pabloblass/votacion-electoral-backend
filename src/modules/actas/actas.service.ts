@@ -6,7 +6,6 @@ import { UpdateActaDto } from './dto/update-acta.dto';
 import { PaginationDto } from '../compartido';
 import { FilterActasDto } from './dto/filter-actas.dto';
 
-
 @Injectable()
 export class ActasService {
   constructor(private readonly prisma: PrismaService) {}
@@ -110,9 +109,6 @@ export class ActasService {
       },
     });
   }
-  
-  
-  
 
   async findPaginated(
     paginationDto: PaginationDto,
