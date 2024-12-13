@@ -13,11 +13,14 @@ import {
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { VotoDTO } from './voto.dto';
+import { IsUnique } from 'src/decorators/is-unique.decorator';
 
 export class CreateActaDto {
   @IsNotEmpty({ message: 'El ID de Mesa es obligatorio' })
   @Type(() => Number)
   @IsPositive({ message: 'El ID de Mesa debe ser positivo' })
+  //@IsUniqueIdMesa({ message: 'La Mesa ya tiene acta registrada' })
+  @IsUnique('Mesa', 'id_mesa', 0, { message: 'El ID de Mesa debe ser único' })
   id_mesa: number;
 
   /*@IsNotEmpty({ message: 'La imagen es obligatorio' })
