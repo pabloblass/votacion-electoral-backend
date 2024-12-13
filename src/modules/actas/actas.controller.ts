@@ -24,8 +24,6 @@ import { FilterActasDto } from './dto/filter-actas.dto';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { multerConfig } from 'src/multer/multer.config';
 import { FormDataToJsonInterceptor } from 'src/interceptors/form-data-to-json.interceptor';
-//import { plainToInstance } from 'class-transformer';
-//import { validate } from 'class-validator';
 
 @Controller('actas')
 export class ActasController {
@@ -41,6 +39,12 @@ export class ActasController {
     @Body() createActaDto: CreateActaDto,
     @Req() request: Request,
   ) {
+    const exists = await this.actasService.existsIdMesa(createActaDto.id_mesa);
+
+    if (!exists) {
+      throw new BadRequestException('La Mesa ya tiene un Acta registrado');
+    }
+
     if (!image) {
       throw new BadRequestException('Se debe cargar una imagen.');
     }
@@ -77,6 +81,15 @@ export class ActasController {
     @Req() request: Request,
     @UploadedFile() image?: Express.Multer.File,
   ) {
+    const exists = await this.actasService.existsIdMesa(
+      updateActaDto.id_mesa,
+      id,
+    );
+
+    if (!exists) {
+      throw new BadRequestException('La Mesa ya tiene un Acta registrado');
+    }
+
     const actaOld = await this.actasService.findOne(id);
 
     let newImage: string | null = null;

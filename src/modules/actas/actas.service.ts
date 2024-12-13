@@ -233,4 +233,17 @@ export class ActasService {
       select: this.selectQuery,
     });
   }
+
+  async existsIdMesa(idMesa: number, excludeId?: number): Promise<boolean> {
+    const whereClause: Prisma.ActaWhereInput = { id_mesa: idMesa };
+    if (excludeId) {
+      whereClause.id = { not: excludeId };
+    }
+
+    const exists = await this.prisma.acta.findFirst({
+      where: whereClause,
+    });
+
+    return !exists; // Es único si no existe
+  }
 }
