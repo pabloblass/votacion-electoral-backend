@@ -6,7 +6,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../prisma/prisma.service';
 import { Prisma, Rol } from '@prisma/client';
-import { PaginationDto } from 'src/modules/compartido';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterUsuariosDto } from './dto/filter-usuarios.dto';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';

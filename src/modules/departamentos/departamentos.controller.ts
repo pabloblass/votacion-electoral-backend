@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { DepartamentosService } from './departamentos.service';
-import { PaginationDto } from '../compartido';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterDptosDto } from './dto/filter-departamentos.dto';
 import { CreateDepartamentoDto } from './dto/create-departamento.dto';
 import { UpdateDepartamentoDto } from './dto/update-departamento.dto';
-import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
+import { ParseIdPipe } from '../../common/pipes/parse-id.pipe';
 
 @Controller('departamentos')
 export class DepartamentosController {

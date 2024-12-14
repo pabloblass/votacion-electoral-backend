@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateRecintoDto } from './dto/create-recinto.dto';
 import { UpdateRecintoDto } from './dto/update-recinto.dto';
-import { PaginationDto } from '../compartido';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterRecintosDto } from './dto/filter-recintos.dto';
 
 @Injectable()

@@ -10,8 +10,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
-import { PaginationDto } from 'src/modules/compartido';
+import { ParseIdPipe } from '../../common/pipes/parse-id.pipe';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { FilterUsuariosDto } from './dto/filter-usuarios.dto';

@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PaginationDto } from '../compartido';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterMunicipiosDto } from './dto/filter-municipios.dto';
 import { CreateMunicipioDto } from './dto/create-municipio.dto';
 import { UpdateMunicipioDto } from './dto/update-municipio.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class MunicipiosService {

@@ -12,23 +12,26 @@ import {
   UploadedFile,
   BadRequestException,
 } from '@nestjs/common';
-import { Request } from 'express';
 import * as fs from 'fs/promises';
-import { readdirSync } from 'fs';
 import * as path from 'path';
+import { Request } from 'express';
 import { ActasService } from './actas.service';
+import { DashboardGateway } from '../dashboard/dashboard.gateway';
+import { FormDataToJsonInterceptor } from 'src/common/interceptors/form-data-to-json.interceptor';
 import { CreateActaDto } from './dto/create-acta.dto';
 import { UpdateActaDto } from './dto/update-acta.dto';
-import { PaginationDto } from '../compartido';
-import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { ParseIdPipe } from '../../common/pipes/parse-id.pipe';
 import { FilterActasDto } from './dto/filter-actas.dto';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
-import { multerConfig } from 'src/multer/multer.config';
-import { FormDataToJsonInterceptor } from 'src/interceptors/form-data-to-json.interceptor';
+import { multerConfig } from 'src/config/multer.config';
 
 @Controller('actas')
 export class ActasController {
-  constructor(private readonly actasService: ActasService) {}
+  constructor(
+    private readonly actasService: ActasService,
+    private readonly dashboardGateway: DashboardGateway,
+  ) {}
 
   @Post()
   @UseInterceptors(
@@ -45,18 +48,32 @@ export class ActasController {
     if (!exists) {
       throw new BadRequestException('La Mesa ya tiene un Acta registrado');
     }
-    // ver para transcriptores
-    // if (!image) {
-    //   throw new BadRequestException('Se debe cargar una imagen.');
-    // }
+
+    if (!image) {
+      throw new BadRequestException('Se debe cargar una imagen.');
+    }
 
     const defaultImagePath = 'src/uploads/defecto/defecto.jpg';
-    return this.actasService.create({
+    const createdActa = this.actasService.create({
       ...createActaDto,
       imagen: image?.filename || defaultImagePath,
       usuario_creacion: request.user.username,
       usuario_modificacion: request.user.username,
     });
+
+    // Notificar al dashboard despues de crear el acta
+    const votosPorCandidatos =
+      await this.dashboardGateway.dashboardService.getVotosPorCandidatos();
+    const votosPorMunicipiosYCandidatos =
+      await this.dashboardGateway.dashboardService.getVotosPorMunicipiosYCandidatos();
+
+    // Emitir eventos para actualizar el dashboard
+    this.dashboardGateway.emitUpdateVotosPorCandidatos(votosPorCandidatos);
+    this.dashboardGateway.emitUpdateVotosPorMunicipiosYCandidatos(
+      votosPorMunicipiosYCandidatos,
+    );
+
+    return createdActa;
   }
 
   @Get()
@@ -119,7 +136,7 @@ export class ActasController {
     if (image) {
       newImage = image.filename;
 
-      // Leer ruta base de imágenes desde una variable de entorno
+      // Leer ruta base de imagenes desde una variable de entorno
       const imageBasePath =
         process.env.ROOT_PATH_IMAGES || path.join(process.cwd(), 'uploads');
 
@@ -138,11 +155,37 @@ export class ActasController {
       usuario_modificacion: request.user.username,
     });
 
+    // Notificar al dashboard despues de crear el acta
+    const votosPorCandidatos =
+      await this.dashboardGateway.dashboardService.getVotosPorCandidatos();
+    const votosPorMunicipiosYCandidatos =
+      await this.dashboardGateway.dashboardService.getVotosPorMunicipiosYCandidatos();
+
+    // Emitir eventos para actualizar el dashboard
+    this.dashboardGateway.emitUpdateVotosPorCandidatos(votosPorCandidatos);
+    this.dashboardGateway.emitUpdateVotosPorMunicipiosYCandidatos(
+      votosPorMunicipiosYCandidatos,
+    );
+
     return updatedActa;
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIdPipe) id: number) {
-    return this.actasService.remove(id);
+  async remove(@Param('id', ParseIdPipe) id: number) {
+    await this.actasService.remove(id);
+
+    // Notificar al dashboard despues de crear el acta
+    const votosPorCandidatos =
+      await this.dashboardGateway.dashboardService.getVotosPorCandidatos();
+    const votosPorMunicipiosYCandidatos =
+      await this.dashboardGateway.dashboardService.getVotosPorMunicipiosYCandidatos();
+
+    // Emitir eventos para actualizar el dashboard
+    this.dashboardGateway.emitUpdateVotosPorCandidatos(votosPorCandidatos);
+    this.dashboardGateway.emitUpdateVotosPorMunicipiosYCandidatos(
+      votosPorMunicipiosYCandidatos,
+    );
+
+    return { message: 'Acta eliminada correctamente' };
   }
 }

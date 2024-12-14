@@ -13,8 +13,8 @@ import { Request } from 'express';
 import { MesasService } from './mesas.service';
 import { CreateMesaDto } from './dto/create-mesa.dto';
 import { UpdateMesaDto } from './dto/update-mesa.dto';
-import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
-import { PaginationDto } from '../compartido';
+import { ParseIdPipe } from '../../common/pipes/parse-id.pipe';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterMesasDto } from './dto/filter-mesas.dto';
 
 @Controller('mesas')

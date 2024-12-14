@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { MunicipiosService } from './municipios.service';
-import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
-import { PaginationDto } from '../compartido';
+import { ParseIdPipe } from '../../common/pipes/parse-id.pipe';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterMunicipiosDto } from './dto/filter-municipios.dto';
 import { CreateMunicipioDto } from './dto/create-municipio.dto';
 import { UpdateMunicipioDto } from './dto/update-municipio.dto';

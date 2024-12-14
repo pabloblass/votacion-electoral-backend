@@ -14,8 +14,8 @@ import { CandidatosService } from './candidatos.service';
 import { CreateCandidatoDto } from './dto/create-candidato.dto';
 import { UpdateCandidatoDto } from './dto/update-candidato.dto';
 import { FilterCandidatosDto } from './dto/filter-candidatos.dto';
-import { PaginationDto } from '../compartido';
-import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
+import { PaginationDto } from '../../common/dto/pagination.dto';
+import { ParseIdPipe } from '../../common/pipes/parse-id.pipe';
 
 @Controller('candidatos')
 export class CandidatosController {
