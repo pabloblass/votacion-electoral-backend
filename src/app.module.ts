@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtAuthGuard } from './jwt/jwt.guard';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { PrismaModule } from './prisma/prisma.module';
-import { CompartidoModule } from './modules/compartido/compartido.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { MunicipiosModule } from './modules/municipios/municipios.module';
@@ -11,11 +10,11 @@ import { RecintosModule } from './modules/recintos/recintos.module';
 import { MesasModule } from './modules/mesas/mesas.module';
 import { CandidatosModule } from './modules/candidatos/candidatos.module';
 import { ActasModule } from './modules/actas/actas.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
     PrismaModule,
-    CompartidoModule,
     AuthModule,
     UsuariosModule,
     MunicipiosModule,
@@ -24,6 +23,7 @@ import { ActasModule } from './modules/actas/actas.module';
     MesasModule,
     CandidatosModule,
     ActasModule,
+    DashboardModule,
   ],
   providers: [
     {

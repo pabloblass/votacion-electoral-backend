@@ -163,10 +163,6 @@ model Acta {
 
 model Voto {
   id                    Int               @id @default(autoincrement())
-  //municipio             Municipio         @relation(fields: [id_municipio], references: [id])
-  //id_municipio          Int
-  //recinto               Recinto           @relation(fields: [id_recinto], references: [id])
-  //id_recinto            Int
   acta                  Acta              @relation(fields: [id_acta], references: [id])
   id_acta               Int
   candidato             Candidato         @relation(fields: [id_candidato], references: [id])

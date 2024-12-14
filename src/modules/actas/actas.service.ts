@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateActaDto } from './dto/create-acta.dto';
 import { UpdateActaDto } from './dto/update-acta.dto';
-import { PaginationDto } from '../compartido';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterActasDto } from './dto/filter-actas.dto';
 
 @Injectable()

@@ -3,7 +3,7 @@ import { CreateCandidatoDto } from './dto/create-candidato.dto';
 import { UpdateCandidatoDto } from './dto/update-candidato.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
-import { PaginationDto } from '../compartido';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterCandidatosDto } from './dto/filter-candidatos.dto';
 
 @Injectable()

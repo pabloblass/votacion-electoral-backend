@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { RecintosService } from './recintos.service';
-import { PaginationDto } from '../compartido';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 import { FilterRecintosDto } from './dto/filter-recintos.dto';
 import { CreateRecintoDto } from './dto/create-recinto.dto';
 import { UpdateRecintoDto } from './dto/update-recinto.dto';
-import { ParseIdPipe } from '../compartido/pipes/parse-id.pipe';
+import { ParseIdPipe } from '../../common/pipes/parse-id.pipe';
 
 @Controller('recintos')
 export class RecintosController {
