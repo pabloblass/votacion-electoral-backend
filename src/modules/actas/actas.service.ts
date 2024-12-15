@@ -207,17 +207,19 @@ export class ActasService {
     return acta;
   }
 
-  async update(id: number, updateActaDto: UpdateActaDto) {
+  /*async update(id: number, updateActaDto: UpdateActaDto) {
     const acta = await this.prisma.acta.findUnique({ where: { id } });
 
     if (!acta) {
       throw new NotFoundException(`El acta con ID ${id} no existe`);
     }
 
-    const updatedActa = await this.prisma.$transaction(async (tx) => {
-      const { imagen, votos, usuario_creacion, usuario_modificacion, ...data } =
-        updateActaDto;
+    const { imagen, votos, usuario_creacion, usuario_modificacion, ...data } =
+      updateActaDto;
 
+    const idsCandidatosEnviados = votos.map((voto) => voto.id_candidato);
+
+    const updatedActa = await this.prisma.$transaction(async (tx) => {
       const updatedActa = await tx.acta.update({
         where: { id },
         data: {
@@ -227,7 +229,7 @@ export class ActasService {
             votos.length > 0 && {
               votos: {
                 upsert: votos.map((voto) => ({
-                  where: { id_candidato: voto.id_candidato, id },
+                  where: { id_candidato: voto.id_candidato, id_acta: id },
                   create: {
                     candidato: { connect: { id: voto.id_candidato } },
                     votos: voto.votos,
@@ -249,6 +251,70 @@ export class ActasService {
     });
 
     return updatedActa;
+  }*/
+
+  async update(id: number, updateActaDto: UpdateActaDto) {
+    // Verificar si el acta existe
+    const acta = await this.prisma.acta.findUnique({ where: { id } });
+    if (!acta) {
+      throw new NotFoundException(`El acta con ID ${id} no existe`);
+    }
+
+    const { imagen, votos, usuario_creacion, usuario_modificacion, ...data } =
+      updateActaDto;
+
+    // Transacción para actualizar el acta y los votos
+    return this.prisma.$transaction(async (tx) => {
+      // Actualizar la información del acta
+      const updatedActa = await tx.acta.update({
+        where: { id },
+        data: {
+          ...data,
+          ...(imagen && { imagen }), // Actualizar la imagen si está definida
+        },
+        select: this.selectQuery,
+      });
+
+      if (votos && votos.length > 0) {
+        // Realizar upsert para votos: actualizar o crear
+        await Promise.all(
+          votos.map((voto) =>
+            tx.voto.upsert({
+              where: {
+                id_acta_id_candidato: {
+                  id_acta: id,
+                  id_candidato: voto.id_candidato,
+                },
+              },
+              create: {
+                acta: { connect: { id } },
+                candidato: { connect: { id: voto.id_candidato } },
+                votos: voto.votos,
+                usuario_creacion,
+                usuario_modificacion,
+              },
+              update: {
+                votos: voto.votos,
+                usuario_modificacion,
+              },
+            }),
+          ),
+        );
+
+        // Eliminar votos que ya no estan en la lista
+        const idsCandidatosEnviados = votos.map((voto) => voto.id_candidato);
+        await tx.voto.deleteMany({
+          where: {
+            id_acta: id,
+            id_candidato: {
+              notIn: idsCandidatosEnviados,
+            },
+          },
+        });
+      }
+
+      return updatedActa;
+    });
   }
 
   async remove(id: number) {
