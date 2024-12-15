@@ -13,14 +13,13 @@ import {
 } from 'class-validator';
 
 export class CreateUsuarioRecintoDto {
-
   @IsNotEmpty({ message: 'El ID de usuario es obligatorio' })
-    @Type(() => Number)
-    @IsPositive({ message: 'El ID de usuario debe ser positivo' })
-    id_usuario: number;
+  @Type(() => Number)
+  @IsPositive({ message: 'El ID de usuario debe ser positivo' })
+  id_usuario: number;
 
   @IsNotEmpty({ message: 'El ID de Recinto es obligatorio' })
-    @Type(() => Number)
-    @IsPositive({ message: 'El ID de Recinto debe ser positivo' })
-    id_recinto: number;
+  @Type(() => Number)
+  @IsPositive({ message: 'El ID de Recinto debe ser positivo' })
+  id_recinto: number;
 }

@@ -16,15 +16,17 @@ import { CreateUsuarioRecintoDto } from './dto/create-usuario-recinto.dto';
 import { UpdateUsuarioRecintoDto } from './dto/update-usuario-recinto.dto';
 import { UsuariosRecintoService } from './usuarios.service';
 
-
 @Controller('usuarios-recintos')
 export class UsuariosRecintoController {
-  constructor(private readonly usuariosRecintoService: UsuariosRecintoService) {}
+  constructor(
+    private readonly usuariosRecintoService: UsuariosRecintoService,
+  ) {}
 
   @Post()
-  create(@Req() request: Request, @Body() createUserRecintoDto: CreateUsuarioRecintoDto) {
+  create(
+    @Req() request: Request,
+    @Body() createUserRecintoDto: CreateUsuarioRecintoDto,
+  ) {
     return this.usuariosRecintoService.create(createUserRecintoDto);
   }
-
-  
 }
