@@ -11,6 +11,7 @@ import { MesasModule } from './modules/mesas/mesas.module';
 import { CandidatosModule } from './modules/candidatos/candidatos.module';
 import { ActasModule } from './modules/actas/actas.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { UsuariosRecintoModule } from './modules/usuarios_recintos/usuarios.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     CandidatosModule,
     ActasModule,
     DashboardModule,
+    UsuariosRecintoModule,
   ],
   providers: [
     {
