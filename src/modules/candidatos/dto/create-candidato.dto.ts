@@ -15,6 +15,13 @@ export class CreateCandidatoDto {
   })
   genero: Genero;
 
+  @IsNotEmpty({ message: 'El color es obligatorio' })
+  @IsString({ message: 'El color debe ser un codigo hexadecimal' })
+  @MaxLength(150, {
+    message: 'El color no debe exceder los 30 caracteres',
+  })
+  color: string;
+
   usuario_creacion: string;
   usuario_modificacion: string;
 }
