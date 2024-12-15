@@ -76,6 +76,13 @@ export class UsuariosService {
         username: true,
         password: true,
         rol: true,
+        usuarios_recintos: {
+          select: {
+            recinto: {
+              select: { id: true, descripcion: true },
+            },
+          },
+        },
       },
     });
   }
@@ -177,8 +184,10 @@ export class UsuariosService {
     };
   }
 
-  findOne(id: number) {
-    return this.findUsuarioByIdOrThrow(id);
+  async findOne(id: number) {
+    const user = await this.findUsuarioByIdOrThrow(id);
+
+    return user;
   }
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto) {

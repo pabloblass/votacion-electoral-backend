@@ -20,6 +20,11 @@ export class AuthService {
       userFound &&
       (await bcrypt.compare(loginDto.password, userFound.password))
     ) {
+      /*const { usuarios_recintos, ...rest } = userFound;
+      const recintos = usuarios_recintos.map((ur) => ur.recinto);
+
+      const transformedUser = { ...rest, recintos };*/
+
       return userFound;
     }
     return null;
