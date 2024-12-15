@@ -176,5 +176,6 @@ model Voto {
   fecha_modificacion    DateTime          @updatedAt @db.Timestamptz(3)
   fecha_eliminacion     DateTime?         @db.Timestamptz(3)
 
+  @@unique([id_acta, id_candidato])
   @@map("votos")
 }
