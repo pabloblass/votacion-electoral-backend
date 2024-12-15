@@ -116,6 +116,7 @@ model Candidato {
   id                    Int               @id @default(autoincrement())
   nombre                String            @db.VarChar(150)
   genero                Genero
+  color                 String            @db.VarChar(30)
   activo                Boolean           @default(true)
   usuario_creacion      String            @db.VarChar(50)
   fecha_creacion        DateTime          @default(now()) @db.Timestamptz(3)

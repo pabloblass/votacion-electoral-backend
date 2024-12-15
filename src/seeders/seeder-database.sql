@@ -7,7 +7,6 @@ VALUES
 (4, 'SASAMOTO', 'sasamoto', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
 (5, 'VLADIMIR ASTETE', 'vladimir', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
 (6, 'VERONICA', 'veronica', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null);
-(7, 'USUARIO RECINTO PRUEBA', 'usuario_recinto', NULL, 'USUARIO_RECINTO', SESSION_USER, now(), SESSION_USER, now(), null);
 
 INSERT INTO public.municipios 
 (id, descripcion, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
@@ -2310,14 +2309,14 @@ VALUES
 
 
 INSERT INTO public.candidatos
-(id, nombre, genero, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
+(id, nombre, genero, color, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
 VALUES
-(1, 'PATRICIA BOHORQUEZ BARRIENTOS', 'F', SESSION_USER, now(), SESSION_USER, now(), null),
-(2, 'JANETHE ESPERANZA CASTRO MARTINEZ', 'F', SESSION_USER, now(), SESSION_USER, now(), null),
-(3, 'LILIAN PAREDES GONZALES', 'F', SESSION_USER, now(), SESSION_USER, now(), null),
-(4, 'FAVIO CHACOLLA HUANCA', 'M', SESSION_USER, now(), SESSION_USER, now(), null),
-(5, 'CARLOS EDUARDO ORTEGA SIVILA', 'M', SESSION_USER, now(), SESSION_USER, now(), null),
-(6, 'HUMBERTO ORTEGA MARTINEZ', 'M', SESSION_USER, now(), SESSION_USER, now(), null);
+(1, 'PATRICIA BOHORQUEZ BARRIENTOS', 'F', '#F2C037', SESSION_USER, now(), SESSION_USER, now(), null),
+(2, 'JANETHE ESPERANZA CASTRO MARTINEZ', 'F', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
+(3, 'LILIAN PAREDES GONZALES', 'F', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
+(4, 'FAVIO CHACOLLA HUANCA', 'M', '#1976d2', SESSION_USER, now(), SESSION_USER, now(), null),
+(5, 'CARLOS EDUARDO ORTEGA SIVILA', 'M', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
+(6, 'HUMBERTO ORTEGA MARTINEZ', 'M', '#f44336', SESSION_USER, now(), SESSION_USER, now(), null);
 
 --RESTABLECER SEQUENCIAS
 SELECT setval('usuarios_id_seq', max(id)) FROM usuarios;

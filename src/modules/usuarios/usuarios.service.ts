@@ -100,19 +100,19 @@ export class UsuariosService {
     const dataToCreated: Prisma.UsuarioCreateInput = { ...restData, rol };
 
     // Si el rol es ADMINISTRADOR, se debe verificar la contraseña
-    if (rol === 'ADMINISTRADOR' && password) {
-      if (!password_confirmation || password !== password_confirmation) {
-        throw new BadRequestException(
-          'Las contraseñas no coinciden o están vacías',
-        );
-      }
-
-      // Encriptar la contraseña
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Agregar la contraseña encriptada
-      dataToCreated.password = hashedPassword;
+    //if (rol === 'ADMINISTRADOR' && password) {
+    if (!password_confirmation || password !== password_confirmation) {
+      throw new BadRequestException(
+        'Las contraseñas no coinciden o están vacías',
+      );
     }
+
+    // Encriptar la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Agregar la contraseña encriptada
+    dataToCreated.password = hashedPassword;
+    //}
 
     if (recintos && recintos.length > 0) {
       const recintosArray = recintos.map((value) => ({ id_recinto: value }));
@@ -211,15 +211,15 @@ export class UsuariosService {
     const dataToUpdate: Prisma.UsuarioUpdateInput = { ...restData, rol };
 
     // Si el rol es ADMINISTRADOR y la contraseña es proporcionada
-    if (rol === 'ADMINISTRADOR' && password) {
-      if (password !== password_confirmation) {
-        throw new BadRequestException('Las contraseñas no coinciden');
-      }
-
-      // Encriptar la contraseña
-      const hashedPassword = await bcrypt.hash(password, 10);
-      dataToUpdate.password = hashedPassword;
+    //if (rol === 'ADMINISTRADOR' && password) {
+    if (password !== password_confirmation) {
+      throw new BadRequestException('Las contraseñas no coinciden');
     }
+
+    // Encriptar la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+    dataToUpdate.password = hashedPassword;
+    //}
 
     if (recintos) {
       const recintosArray = recintos.map((value) => ({ id_recinto: value }));

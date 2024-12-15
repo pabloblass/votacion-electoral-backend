@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class DashboardService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getVotosPorCandidatos() {
+  /*async getVotosPorCandidatos() {
     const votosPorCandidato = await this.prisma.voto.groupBy({
       by: ['id_candidato'],
       _sum: {
@@ -17,6 +17,7 @@ export class DashboardService {
       select: {
         id: true,
         nombre: true,
+        color: true,
       },
     });
 
@@ -29,6 +30,37 @@ export class DashboardService {
     });
 
     return stats;
+  }*/
+
+  async getVotosPorCandidatos() {
+    const candidatosList = await this.prisma.candidato.findMany({
+      select: { id: true, nombre: true, color: true },
+      where: { activo: true },
+      orderBy: { id: 'asc' },
+    });
+
+    const result = [];
+
+    const promises = candidatosList.map(async (candidato) => {
+      const sumResult = await this.prisma.voto.aggregate({
+        _sum: {
+          votos: true,
+        },
+        where: {
+          id_candidato: candidato.id,
+        },
+      });
+
+      const votos = sumResult._sum.votos || 0;
+
+      result.push({ candidato, votos });
+    });
+
+    await Promise.all(promises);
+
+    result.sort((a, b) => a.candidato.id - b.candidato.id);
+
+    return result;
   }
 
   async getVotosPorMunicipiosYCandidatos() {
@@ -39,7 +71,7 @@ export class DashboardService {
     });
 
     const candidatosList = await this.prisma.candidato.findMany({
-      select: { id: true, nombre: true },
+      select: { id: true, nombre: true, color: true },
       where: { activo: true },
       orderBy: { id: 'asc' },
     });
@@ -47,11 +79,11 @@ export class DashboardService {
     const arrayData = [];
 
     await Promise.all(
-      municipiosList.map(async (municipio) => {
+      candidatosList.map(async (candidato) => {
         const arrayVotosPorCandidato = [];
 
         await Promise.all(
-          candidatosList.map(async (candidato) => {
+          municipiosList.map(async (municipio) => {
             const sumResult = await this.prisma.voto.aggregate({
               _sum: {
                 votos: true,
@@ -71,20 +103,20 @@ export class DashboardService {
             // Extraer la suma, devolviendo 0 si es null
             const votos = sumResult._sum.votos || 0;
 
-            arrayVotosPorCandidato.push({ candidato, votos });
+            arrayVotosPorCandidato.push({ municipio, votos });
           }),
         );
 
         arrayData.push({
-          municipio,
+          candidato,
           data: arrayVotosPorCandidato.sort(
-            (a, b) => a.candidato.id - b.candidato.id,
+            (a, b) => a.municipio.id - b.municipio.id,
           ),
         });
       }),
     );
 
-    arrayData.sort((a, b) => a.municipio.id - b.municipio.id);
+    arrayData.sort((a, b) => a.candidato.id - b.candidato.id);
 
     return arrayData;
   }

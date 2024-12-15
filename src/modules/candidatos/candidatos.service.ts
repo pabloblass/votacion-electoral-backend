@@ -14,6 +14,7 @@ export class CandidatosService {
     id: true,
     nombre: true,
     genero: true,
+    color: true,
     activo: true,
     usuario_creacion: true,
     fecha_creacion: true,
