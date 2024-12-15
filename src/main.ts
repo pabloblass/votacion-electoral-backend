@@ -7,6 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('Bootstrap');
   const port = process.env.PORT ?? 3000;
+  const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
 
   app.setGlobalPrefix('api');
 
@@ -18,7 +19,13 @@ async function bootstrap() {
     }),
   );
 
-  app.enableCors();
+  //app.enableCors();
+  app.enableCors({
+    origin: frontendUrl, // Permite la conexión desde la URL del frontend
+    credentials: true, // Habilita el soporte para cookies/sesiones si es necesario
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Métodos permitidos
+    allowedHeaders: 'Content-Type, Authorization', // Cabeceras permitidas
+  });
 
   app.useGlobalGuards(AuthGuard('jwt') as any);
 
