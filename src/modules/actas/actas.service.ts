@@ -115,28 +115,36 @@ export class ActasService {
     filterActasDto: FilterActasDto,
   ) {
     const { page = 1, limit = 10, sortBy, sortOrder } = paginationDto;
-    const { id_municipio, id_recinto, nro_mesa } = filterActasDto;
+    const { municipio, recinto, nro_mesa } = filterActasDto;
 
-    const where: Prisma.ActaWhereInput = {};
+    const where: Prisma.ActaWhereInput = {
+      mesa: {
+        AND: [] as Prisma.MesaWhereInput[], // Asegura que AND sea un array válido
+      },
+    };
 
-    if (id_municipio) {
-      where.mesa = {
+    if (municipio) {
+      (where.mesa!.AND! as Prisma.MesaWhereInput[]).push({
         recinto: {
-          id_municipio: id_municipio,
+          municipio: {
+            descripcion: { contains: municipio, mode: 'insensitive' },
+          },
         },
-      };
+      });
     }
 
-    if (id_recinto) {
-      where.mesa = {
-        id_recinto: id_recinto,
-      };
+    if (recinto) {
+      (where.mesa!.AND! as Prisma.MesaWhereInput[]).push({
+        recinto: {
+          descripcion: { contains: recinto, mode: 'insensitive' },
+        },
+      });
     }
 
     if (nro_mesa) {
-      where.mesa = {
+      (where.mesa!.AND! as Prisma.MesaWhereInput[]).push({
         nro_mesa,
-      };
+      });
     }
 
     const orderBy = sortBy

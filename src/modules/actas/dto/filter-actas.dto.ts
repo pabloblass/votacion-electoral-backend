@@ -6,12 +6,12 @@ export class FilterActasDto {
   id_departamento?: number;*/
 
   @IsOptional()
-  @IsPositive({ message: 'El ID de Municipio debe ser positivo' })
-  id_municipio?: number;
+  //@IsPositive({ message: 'El ID de Municipio debe ser positivo' })
+  municipio?: string;
 
   @IsOptional()
-  @IsPositive({ message: 'El ID de Recinto debe ser positivo' })
-  id_recinto?: number;
+  //@IsPositive({ message: 'El ID de Recinto debe ser positivo' })
+  recinto?: string;
 
   @IsOptional()
   @IsPositive({ message: 'El Número de Mesa debe ser positivo' })
