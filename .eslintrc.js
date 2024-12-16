@@ -22,7 +22,8 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
-    'linebreak-style': ['error', 'unix'],
+    //'linebreak-style': ['error', 'unix'],
+    'linebreak-style': off,
     //'max-len': 'off',
   },
 };

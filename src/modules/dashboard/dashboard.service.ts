@@ -6,6 +6,37 @@ export class DashboardService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getVotosPorCandidatos() {
+    const candidatosList = await this.prisma.candidato.findMany({
+      select: { id: true, nombre: true, color: true },
+      where: { activo: true },
+      orderBy: { id: 'asc' },
+    });
+
+    const result = [];
+
+    const promises = candidatosList.map(async (candidato) => {
+      const sumResult = await this.prisma.voto.aggregate({
+        _sum: {
+          votos: true,
+        },
+        where: {
+          id_candidato: candidato.id,
+        },
+      });
+
+      const votos = sumResult._sum.votos || 0;
+
+      result.push({ candidato, votos });
+    });
+
+    await Promise.all(promises);
+
+    result.sort((a, b) => a.candidato.id - b.candidato.id);
+
+    return result;
+  }
+
+  /*async getVotosPorCandidatos() {
     // Obtener la lista de candidatos activos
     const candidatosList = await this.prisma.candidato.findMany({
       select: { id: true, nombre: true, color: true },
@@ -60,9 +91,9 @@ export class DashboardService {
 
     // Retornar los resultados ordenados por ID de candidato
     return result.sort((a, b) => (a.candidato.id || 0) - (b.candidato.id || 0));
-  }
+  }*/
 
-  /*async getVotosPorMunicipiosYCandidatos() {
+  async getVotosPorMunicipiosYCandidatos() {
     const municipiosList = await this.prisma.municipio.findMany({
       select: { id: true, descripcion: true },
       where: { activo: true },
@@ -118,9 +149,9 @@ export class DashboardService {
     arrayData.sort((a, b) => a.candidato.id - b.candidato.id);
 
     return arrayData;
-  }*/
+  }
 
-  async getVotosPorMunicipiosYCandidatos() {
+  /*async getVotosPorMunicipiosYCandidatos() {
     // Obtener la lista de municipios activos
     const municipiosList = await this.prisma.municipio.findMany({
       select: { id: true, descripcion: true },
@@ -229,5 +260,5 @@ export class DashboardService {
     return arrayData.sort(
       (a, b) => (a.candidato.id || 0) - (b.candidato.id || 0),
     );
-  }
+  }*/
 }
