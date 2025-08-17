@@ -2317,15 +2317,15 @@ VALUES
 (4, 'Libre', 'Presidente', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
 (5, 'Libertad y Progreso ADN', 'Presidente', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
 (6, 'MAS-IPSP', 'Presidente', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null);
-(7, 'Partido Democrata Cristiano', 'Presidente', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null);
-(8, 'UNIDAD', 'Presidente', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null);
+(7, 'Partido Democrata Cristiano', 'Presidente', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null),
+(8, 'UNIDAD', 'Presidente', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null),
 (9, 'Alianza Popular', 'Diputado Uninominal', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
 (10, 'Autonomia Para Bolivia Sumate', 'Diputado Uninominal', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
 (11, 'La Fuerza del Pueblo', 'Diputado Uninominal', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
 (12, 'Libre', 'Diputado Uninominal', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
 (13, 'Libertad y Progreso ADN', 'Diputado Uninominal', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
-(14, 'MAS-IPSP', 'Diputado Uninominal', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null);
-(15, 'Partido Democrata Cristiano', 'Diputado Uninominal', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null);
+(14, 'MAS-IPSP', 'Diputado Uninominal', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null),
+(15, 'Partido Democrata Cristiano', 'Diputado Uninominal', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null),
 (16, 'UNIDAD', 'Diputado Uninominal', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null);
 
 

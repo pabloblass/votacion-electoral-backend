@@ -1,6 +1,9 @@
 # Dockerfile para Backend NestJS
 FROM node:20-alpine AS builder
 
+# Instalar dependencias del sistema necesarias para Prisma (openssl)
+RUN apk add --no-cache openssl
+
 # Establecer directorio de trabajo
 WORKDIR /app
 
