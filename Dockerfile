@@ -31,11 +31,17 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
+# Copiar el script SQL desde el builder
+COPY --from=builder /app/src/seeders/seeder-database.sql ./scripts/
+
 # Copiar archivos necesarios desde builder
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/prisma ./prisma
+
+# Ejecutar el script al iniciar (modifica el CMD)
+CMD ["sh", "-c", "psql postgresql://${DATABASE_URL} -f ./scripts/seeder-database.sql && node dist/main"]
 
 # Exponer puerto
 EXPOSE 3000

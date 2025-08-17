@@ -21,7 +21,8 @@ async function bootstrap() {
 
   //app.enableCors();
   app.enableCors({
-    origin: frontendUrl, // Permite la conexión desde la URL del frontend
+    //origin: frontendUrl, // Permite la conexión desde la URL del frontend
+    origin: true, // Permite cualquier origen
     credentials: true, // Habilita el soporte para cookies/sesiones si es necesario
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Métodos permitidos
     allowedHeaders: 'Content-Type, Authorization', // Cabeceras permitidas
