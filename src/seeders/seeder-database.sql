@@ -2309,14 +2309,25 @@ VALUES
 
 
 INSERT INTO public.candidatos
-(id, nombre, genero, color, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
+(id, nombre, tipo, color, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
 VALUES
-(1, 'PATRICIA BOHORQUEZ BARRIENTOS', 'F', '#F2C037', SESSION_USER, now(), SESSION_USER, now(), null),
-(2, 'JANETHE ESPERANZA CASTRO MARTINEZ', 'F', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
-(3, 'LILIAN PAREDES GONZALES', 'F', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
-(4, 'FAVIO CHACOLLA HUANCA', 'M', '#1976d2', SESSION_USER, now(), SESSION_USER, now(), null),
-(5, 'CARLOS EDUARDO ORTEGA SIVILA', 'M', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
-(6, 'HUMBERTO ORTEGA MARTINEZ', 'M', '#f44336', SESSION_USER, now(), SESSION_USER, now(), null);
+(1, 'Alianza Popular', 'Presidente', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
+(2, 'Autonomia Para Bolivia Sumate', 'Presidente', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
+(3, 'La Fuerza del Pueblo', 'Presidente', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
+(4, 'Libre', 'Presidente', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
+(5, 'Libertad y Progreso ADN', 'Presidente', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
+(6, 'MAS-IPSP', 'Presidente', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null);
+(7, 'Partido Democrata Cristiano', 'Presidente', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null);
+(8, 'UNIDAD', 'Presidente', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null);
+(9, 'Alianza Popular', 'Diputado Uninominal', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
+(10, 'Autonomia Para Bolivia Sumate', 'Diputado Uninominal', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
+(11, 'La Fuerza del Pueblo', 'Diputado Uninominal', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
+(12, 'Libre', 'Diputado Uninominal', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
+(13, 'Libertad y Progreso ADN', 'Diputado Uninominal', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
+(14, 'MAS-IPSP', 'Diputado Uninominal', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null);
+(15, 'Partido Democrata Cristiano', 'Diputado Uninominal', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null);
+(16, 'UNIDAD', 'Diputado Uninominal', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null);
+
 
 --RESTABLECER SEQUENCIAS
 SELECT setval('usuarios_id_seq', max(id)) FROM usuarios;
