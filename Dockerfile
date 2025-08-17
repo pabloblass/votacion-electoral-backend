@@ -2,7 +2,7 @@
 FROM node:20-alpine AS builder
 
 # Instalar dependencias del sistema necesarias para Prisma (openssl)
-RUN apk add --no-cache python3 make g++
+RUN apk add --no-cache openssl python3 make g++
 
 # Establecer directorio de trabajo
 WORKDIR /app
@@ -28,6 +28,9 @@ RUN npm prune --production
 
 # Etapa de producción
 FROM node:20-alpine AS production
+
+# Instala openssl en la imagen de producción
+RUN apk add --no-cache openssl
 
 WORKDIR /app
 
