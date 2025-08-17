@@ -19,9 +19,9 @@ enum Rol {
   TRANSCRIPTOR
 }
 
-enum Genero {
-  MASCULINO   @map("M")
-  FEMENINO    @map("F")
+enum Tipo {
+  PRESIDENTE
+  DIPUTADO
 }
 
 enum Estado {
@@ -115,7 +115,7 @@ model Mesa {
 model Candidato {
   id                    Int               @id @default(autoincrement())
   nombre                String            @db.VarChar(150)
-  genero                Genero
+  tipo                  Tipo
   color                 String            @db.VarChar(30)
   activo                Boolean           @default(true)
   usuario_creacion      String            @db.VarChar(50)

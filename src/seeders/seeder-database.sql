@@ -1,12 +1,12 @@
 INSERT INTO public.usuarios
 (id, nombre_apellido, username, password, rol, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
 VALUES
-(1, 'JUAN PABLO BASCOPE CASTRO', 'pabloblass', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
-(2, 'ISMAEL CESPEDES', 'ismael', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
-(3, 'DAVINIA', 'davinia', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
-(4, 'SASAMOTO', 'sasamoto', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
-(5, 'VLADIMIR ASTETE', 'vladimir', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
-(6, 'VERONICA', 'veronica', '$2b$10$8xM.MDE1LhkwkJJV1Ckz.OkygOZTZYTGtFY/nHtV1t.xmAG8PHfz.', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null);
+(1, 'JUAN PABLO BASCOPE CASTRO', 'pabloblass', '$2b$10$6Kr8MPzLlh1mN7WLDYfCU.uCWJSFGWAoEgbc0A8FFUU3.1NgLYTcO', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
+(2, 'ISMAEL CESPEDES', 'ismael', '$2b$10$6Kr8MPzLlh1mN7WLDYfCU.uCWJSFGWAoEgbc0A8FFUU3.1NgLYTcO', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
+(3, 'FRANCO PARRAGA', 'fparraga', '$2b$10$6Kr8MPzLlh1mN7WLDYfCU.uCWJSFGWAoEgbc0A8FFUU3.1NgLYTcO', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
+(4, 'VLADIMIR ASTETE', 'vladimir', '$2b$10$6Kr8MPzLlh1mN7WLDYfCU.uCWJSFGWAoEgbc0A8FFUU3.1NgLYTcO', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null);
+/*(5, 'SASAMOTO', 'sasamoto', '$2b$10$6Kr8MPzLlh1mN7WLDYfCU.uCWJSFGWAoEgbc0A8FFUU3.1NgLYTcO', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null),
+(7, 'VERONICA', 'veronica', '$2b$10$6Kr8MPzLlh1mN7WLDYfCU.uCWJSFGWAoEgbc0A8FFUU3.1NgLYTcO', 'ADMINISTRADOR', SESSION_USER, now(), SESSION_USER, now(), null);*/
 
 INSERT INTO public.municipios 
 (id, descripcion, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
@@ -2311,22 +2311,22 @@ VALUES
 INSERT INTO public.candidatos
 (id, nombre, tipo, color, usuario_creacion, fecha_creacion, usuario_modificacion, fecha_modificacion, fecha_eliminacion)
 VALUES
-(1, 'Alianza Popular', 'Presidente', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
-(2, 'Autonomia Para Bolivia Sumate', 'Presidente', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
-(3, 'La Fuerza del Pueblo', 'Presidente', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
-(4, 'Libre', 'Presidente', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
-(5, 'Libertad y Progreso ADN', 'Presidente', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
-(6, 'MAS-IPSP', 'Presidente', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null);
-(7, 'Partido Democrata Cristiano', 'Presidente', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null),
-(8, 'UNIDAD', 'Presidente', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null),
-(9, 'Alianza Popular', 'Diputado Uninominal', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
-(10, 'Autonomia Para Bolivia Sumate', 'Diputado Uninominal', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
-(11, 'La Fuerza del Pueblo', 'Diputado Uninominal', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
-(12, 'Libre', 'Diputado Uninominal', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
-(13, 'Libertad y Progreso ADN', 'Diputado Uninominal', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
-(14, 'MAS-IPSP', 'Diputado Uninominal', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null),
-(15, 'Partido Democrata Cristiano', 'Diputado Uninominal', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null),
-(16, 'UNIDAD', 'Diputado Uninominal', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null);
+(1, 'Alianza Popular', 'PRESIDENTE', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
+(2, 'Autonomia Para Bolivia Sumate', 'PRESIDENTE', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
+(3, 'La Fuerza del Pueblo', 'PRESIDENTE', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
+(4, 'Libre', 'PRESIDENTE', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
+(5, 'Libertad y Progreso ADN', 'PRESIDENTE', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
+(6, 'MAS-IPSP', 'PRESIDENTE', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null),
+(7, 'Partido Democrata Cristiano', 'PRESIDENTE', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null),
+(8, 'UNIDAD', 'PRESIDENTE', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null),
+(9, 'Alianza Popular', 'DIPUTADO', '#31CCEC', SESSION_USER, now(), SESSION_USER, now(), null),
+(10, 'Autonomia Para Bolivia Sumate', 'DIPUTADO', '#9C27B0', SESSION_USER, now(), SESSION_USER, now(), null),
+(11, 'La Fuerza del Pueblo', 'DIPUTADO', '#21BA45', SESSION_USER, now(), SESSION_USER, now(), null),
+(12, 'Libre', 'DIPUTADO', '#5533FF', SESSION_USER, now(), SESSION_USER, now(), null),
+(13, 'Libertad y Progreso ADN', 'DIPUTADO', '#FF0000', SESSION_USER, now(), SESSION_USER, now(), null),
+(14, 'MAS-IPSP', 'DIPUTADO', '#0000FF', SESSION_USER, now(), SESSION_USER, now(), null),
+(15, 'Partido Democrata Cristiano', 'DIPUTADO', '#1e4a49', SESSION_USER, now(), SESSION_USER, now(), null),
+(16, 'UNIDAD', 'DIPUTADO', '#858c45', SESSION_USER, now(), SESSION_USER, now(), null);
 
 
 --RESTABLECER SEQUENCIAS

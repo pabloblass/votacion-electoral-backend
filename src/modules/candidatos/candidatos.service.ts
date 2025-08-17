@@ -13,7 +13,7 @@ export class CandidatosService {
   private readonly selectQuery: Prisma.CandidatoSelect = {
     id: true,
     nombre: true,
-    genero: true,
+    tipo: true,
     color: true,
     activo: true,
     usuario_creacion: true,
@@ -46,7 +46,7 @@ export class CandidatosService {
     return this.prisma.candidato.findMany({
       select: { id: true, nombre: true },
       where: { activo: true },
-      orderBy: { genero: 'asc' },
+      orderBy: { tipo: 'asc' },
     });
   }
 
@@ -68,7 +68,7 @@ export class CandidatosService {
     const [data, total] = await Promise.all([
       this.prisma.candidato.findMany({
         where,
-        select: { id: true, nombre: true, genero: true, activo: true },
+        select: { id: true, nombre: true, tipo: true, activo: true },
         skip: limit > 0 ? (page - 1) * limit : undefined,
         take: limit > 0 ? limit : undefined,
         orderBy,

@@ -1,4 +1,4 @@
-import { Genero } from '@prisma/client';
+import { Tipo } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class CreateCandidatoDto {
@@ -9,11 +9,11 @@ export class CreateCandidatoDto {
   })
   nombre: string;
 
-  @IsNotEmpty({ message: 'El genero es obligatorio' })
-  @IsEnum(Genero, {
-    message: `El genero debe ser uno de los siguientes valores: ${Object.values(Genero).join(', ')}`,
+  @IsNotEmpty({ message: 'El tipo es obligatorio' })
+  @IsEnum(Tipo, {
+    message: `El genero debe ser uno de los siguientes valores: ${Object.values(Tipo).join(', ')}`,
   })
-  genero: Genero;
+  tipo: Tipo;
 
   @IsNotEmpty({ message: 'El color es obligatorio' })
   @IsString({ message: 'El color debe ser un codigo hexadecimal' })
